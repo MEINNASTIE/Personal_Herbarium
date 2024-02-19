@@ -58,13 +58,14 @@ function PlantItem({ plant }){
                   <p>Category: {plant.categorie}</p>
                   <p>Latin Name: {plant.latinName}</p>
                   <p>Description: {plant.description}</p>
-                 
-                  <button onClick={onDeleteClick} className="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                  Delete Plant
-                  </button>
-                  <button onClick={onEditeClick} className="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                  Edite Plant
-                  </button></>)}
+                  <div>
+                 <button onClick={onDeleteClick} className="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-4">
+                   Delete Plant
+                 </button>
+                 <button onClick={onEditeClick} className="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                 Edit Plant
+                </button>
+                 </div></>)}
             
 
         </div>
