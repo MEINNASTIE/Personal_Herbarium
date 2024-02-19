@@ -1,18 +1,22 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-
 import { Link } from 'react-router-dom';
 
 import HamburgerMenu from './HamburgerMenu';
 
 export default function Navbar() {
   return (
+    <nav className="flex items-center justify-between flex-wrap bg-gray-500 p-6">
+      <div className="flex items-center">
+        <FontAwesomeIcon icon={faUser} className="text-white" />
+        <span className="text-white ml-2">User Name</span>
     <nav className="flex items-center justify-between flex-wrap bg-gray-500 p-6 z-50">
       <div className="flex items-center">
            {/* DUMMY LATER DISPOSE OFF */}
           <FontAwesomeIcon icon={faUser} className="text-white" />
           <span className="text-white ml-2">User Name</span>
           <Link to="/login" className="text-white ml-4">Login</Link>
+
       </div>
       <div className="lg:hidden">
         <HamburgerMenu />
@@ -47,3 +51,4 @@ export default function Navbar() {
 //           <Link to="/login" className="text-white ml-4">Login</Link>
 //           </>
 // )}
+
