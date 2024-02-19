@@ -1,0 +1,16 @@
+/* THEMES */
+
+.default-theme {
+    background-color: #ffffff;
+    color: #000000;
+}
+  
+.dark-theme {
+    background-color: #333333; 
+    color: #ffffff; 
+}
+  
+.green-theme {
+    background-color: #CED0AE;
+    color: #ffffff;
+}

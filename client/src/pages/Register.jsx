@@ -1,21 +1,31 @@
-import React from 'react';
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { baseUrl } from "../utils/api.js"
 
 
 export const Register = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const [theme, setTheme] = useState('light'); 
+
+    const body = {
+      theme
+    }
+
     const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
       
         try {
           // Make a POST request to your server's register endpoint
-          const response = await axios.post('http://localhost:3000/auth/register', { name, email, password });
-      
+          const response = await axios.post(`${baseUrl}/auth/register`, { name, email, password, theme });
+          // theme handler set to body 
+          body,
+          { headers: { 'Content-Type': 'application/json' } }
+
           // Check if 'response' is defined before accessing 'data'
           if (response && response.data) {
             // Handle the response accordingly (e.g., set user state, redirect, etc.)
@@ -86,6 +96,36 @@ export const Register = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+            </div>
+            <div>
+              {/* We change the name themes later to fit our aesthetics ;) */}
+              <label>Select Theme</label>
+              <div className="flex justify-center gap-3">
+                <span
+                  onClick={() => setTheme("default")}
+                  className={`rounded-md border-gray-300 bg-indigo-600 p-2 cursor-pointer ${
+                    theme === "default" ? "bg-gray-600 text-white" : ""
+                  }`}
+                >
+                  Default
+                </span>
+                <span
+                  onClick={() => setTheme("green")}
+                  className={`rounded-md border-gray-300 bg-indigo-600 p-2 cursor-pointer ${
+                    theme === "green" ? "bg-gray-600 text-white" : ""
+                  }`}
+                >
+                  Green
+                </span>
+                <span
+                  onClick={() => setTheme("dark")}
+                  className={`rounded-md border-gray-300 bg-indigo-600 p-2 cursor-pointer ${
+                    theme === "dark" ? "bg-gray-600 text-white" : ""
+                  }`}
+                >
+                  Dark
+                </span>
+              </div>
             </div>
             <div>
               <button

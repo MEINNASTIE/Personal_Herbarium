@@ -3,18 +3,19 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
 import HamburgerMenu from './HamburgerMenu';
+import { useContext } from 'react';
+import { UserContext } from '../../context/userProvider';
 
 export default function Navbar() {
+  const { user } = useContext(UserContext);
+
   return (
-    <nav className="flex items-center justify-between flex-wrap bg-gray-500 p-6">
-      <div className="flex items-center">
-        <FontAwesomeIcon icon={faUser} className="text-white" />
-        <span className="text-white ml-2">User Name</span>
+    <div>
     <nav className="flex items-center justify-between flex-wrap bg-gray-500 p-6 z-50">
       <div className="flex items-center">
            {/* DUMMY LATER DISPOSE OFF */}
           <FontAwesomeIcon icon={faUser} className="text-white" />
-          <span className="text-white ml-2">User Name</span>
+          <span className="text-white ml-2">{user ? user.name : 'User'}</span>
           <Link to="/login" className="text-white ml-4">Login</Link>
 
       </div>
@@ -29,6 +30,7 @@ export default function Navbar() {
         </div>
       </div>
     </nav>
+    </div>
   );
 }
 

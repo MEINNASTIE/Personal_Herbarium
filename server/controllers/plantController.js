@@ -1,4 +1,5 @@
 import Plant from "../models/Plant.js"
+import User from "../models/User.js"
 
 export const handlegetplants = async (req, res) => {
     try{
@@ -27,7 +28,6 @@ export const handleCreate = async (req, res) => {
 
 }
 
-
 export const handleDelete = async (req, res) => {
     
     try{
@@ -51,3 +51,25 @@ export const handleEdite = async(req,res)=>{
     }
     res.json(updatedPlant)
 }
+
+// Search to find all users plants
+
+export const SearchPlants = async (req, res) => {
+    try {
+        const { query } = req.query;
+        let plants;
+        
+        // If there's a query, perform a search
+        if (query) {
+            plants = await Plant.find({ name: { $regex: query, $options: 'i' } });
+        } else {
+            // Otherwise, fetch all plants
+            plants = await Plant.find();
+        }
+        
+        res.json({ success: true, plants });
+    } catch (error) {
+        console.error("Error searching plants:", error.message);
+        res.status(500).json({ success: false, error: error.message });
+    }
+};

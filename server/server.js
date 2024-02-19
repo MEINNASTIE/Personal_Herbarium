@@ -4,8 +4,9 @@ import {port} from "./config/env-vars.js"
 import cors from 'cors';
 import express from 'express';
 import authRoutes from './routes/authRoutes.js';
-import connectDB from './lib/mongo-db.js';
+import plantRoutes from "./routes/plantRoutes.js";
 import errorMiddleware from './middlewares/errorMiddleware.js';
+
 
 const app = express();
 app.use(express.json());

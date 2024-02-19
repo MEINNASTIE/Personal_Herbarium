@@ -77,10 +77,23 @@ const PlantProvider = ({ children }) => {
       }
       }
 
+      const searchPlants = async (query) => {
+        try {
+          let url = `${baseUrl}/plant/search`;
+          if (query.trim()) {
+            url += `?query=${query}`;
+          }
+          const response = await axios.get(url);
+          setPlants(response.data.plants);
+        } catch (error) {
+          console.error("Error searching plants:", error);
+        }
+      };
+
 
 
       return (
-        <PlantContext.Provider value={{createPlantHandler,deletePlantHandler,editePLant,plants}}>
+        <PlantContext.Provider value={{createPlantHandler,deletePlantHandler,editePLant,plants, searchPlants}}>
           {children}
         </PlantContext.Provider>
       );

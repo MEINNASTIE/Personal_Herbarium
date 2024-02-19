@@ -1,27 +1,41 @@
-import React from "react";
-import { useState } from "react";
 import axios from "axios";
+
+import { useContext, useState } from "react";
+import { baseUrl } from "../utils/api.js"
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/userProvider.jsx"
 
 export default function Login() {
-    const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { login, setUserTheme } = useContext(UserContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Make a POST request to your server's login endpoint
-      const response = await axios.post('http://localhost:3000/login', { email, password });
+      const response = await login(email, password);
 
-      // Handle the response accordingly (e.g., set user state, redirect, etc.)
-      console.log(response.data);
-        if(response.status === 200){
-            console.log('Login successful:', response.data);
-            navigate('/homepage');
+      if (!response.success) {
+        setError(response.error);
+      } else {
+        const userId = response.user._id;
+        const themeResponse = await axios.get(`${baseUrl}/auth/${userId}/theme`, {
+          headers: {
+            Authorization: `Bearer ${response.token}`
+          }
+        });
+
+        if (themeResponse.data.theme) {
+          setUserTheme(themeResponse.data.theme); 
         }
+
+        navigate('/');
+      }
     } catch (error) {
-      console.error('Login failed:', error.response.data.error);
+      setError("Login failed. Please try again.");
     }
   };
 
@@ -65,6 +79,7 @@ export default function Login() {
           />
         </div>
         <div>
+        <p>{error}</p>
           <button
             type="submit"
             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

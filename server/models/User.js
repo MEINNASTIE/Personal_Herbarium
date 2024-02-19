@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 
+const { Schema } = mongoose;
 
-const userShemas = new mongoose.Schema({
+const userSchemas = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -17,8 +18,14 @@ const userShemas = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-    }
+    },
+    theme: {
+        type: String,
+        enum: ['default', 'dark', 'green'], // change later theme names accordingly
+        default: 'default',
+      },
+    plants: [{ type: Schema.Types.ObjectId, ref: 'Plant' }]
 });
-const User = mongoose.model('User', userShemas);
+const User = mongoose.model('User', userSchemas);
     
 export default User;
