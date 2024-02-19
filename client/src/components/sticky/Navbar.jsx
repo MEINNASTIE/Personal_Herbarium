@@ -7,7 +7,7 @@ import HamburgerMenu from './HamburgerMenu';
 
 export default function Navbar() {
   return (
-    <nav className="flex items-center justify-between flex-wrap bg-gray-500 p-6">
+    <nav className="flex items-center justify-between flex-wrap bg-gray-500 p-6 z-50">
       <div className="flex items-center">
            {/* DUMMY LATER DISPOSE OFF */}
           <FontAwesomeIcon icon={faUser} className="text-white" />
