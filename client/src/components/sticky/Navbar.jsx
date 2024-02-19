@@ -1,5 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
+
 import HamburgerMenu from './HamburgerMenu';
 
 export default function Navbar() {
@@ -8,6 +10,13 @@ export default function Navbar() {
       <div className="flex items-center">
         <FontAwesomeIcon icon={faUser} className="text-white" />
         <span className="text-white ml-2">User Name</span>
+    <nav className="flex items-center justify-between flex-wrap bg-gray-500 p-6 z-50">
+      <div className="flex items-center">
+           {/* DUMMY LATER DISPOSE OFF */}
+          <FontAwesomeIcon icon={faUser} className="text-white" />
+          <span className="text-white ml-2">User Name</span>
+          <Link to="/login" className="text-white ml-4">Login</Link>
+
       </div>
       <div className="lg:hidden">
         <HamburgerMenu />
@@ -24,4 +33,22 @@ export default function Navbar() {
 }
 
 
+// CODE FOR LATER USE
+// import { useContext } from 'react';
+// import UserProvider from '../../context/userProvider.jsx'
+//  const { isLoggedIn, logout } = useContext(UserProvider);
+//   {isLoggedIn ? (
+//           <>
+//           {/* add change of user name and profile i */}
+//             <FontAwesomeIcon icon={faUser} className="text-white" />
+//             <span className="text-white ml-2">User Name</span>
+//             <button onClick={logout} className="text-white ml-4">Logout</button>
+//           </>
+//         ) : (
+//           <>
+//           <FontAwesomeIcon icon={faUser} className="text-white" />
+//           <span className="text-white ml-2">User Name</span>
+//           <Link to="/login" className="text-white ml-4">Login</Link>
+//           </>
+// )}
 
