@@ -30,3 +30,7 @@ After the basic things have been successfully set up, we can move to adding:
 
 - Functionality for Users to add notes under their Plants only they can see
 - Favorites and Favorites special page where users can track their favorite plants
+
+
+# Additions!
+- added font-awesome library
