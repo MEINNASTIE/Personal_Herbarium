@@ -111,8 +111,18 @@ const PlantProvider = ({ children }) => {
         return <div>Loading...</div>; 
       }
 
+      const getCategories = async () => {
+        const response = await axios.get(`${baseUrl}/plant/categories`);
+        return response.data.categories; 
+    };
+
+    const filterPlantsByCategory = async (category) => {
+      const response = await axios.get(`${baseUrl}/plant/filter?categorie=${category}`);
+      setPlants(response.data.plants);
+    };
+
       return (
-        <PlantContext.Provider value={{createPlantHandler,deletePlantHandler,editePLant,plants, searchPlants}}>
+        <PlantContext.Provider value={{createPlantHandler,deletePlantHandler,editePLant,plants, searchPlants, getCategories, filterPlantsByCategory}}>
           {children}
         </PlantContext.Provider>
       );

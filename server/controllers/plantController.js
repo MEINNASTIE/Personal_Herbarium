@@ -77,3 +77,30 @@ export const SearchPlants = async (req, res) => {
         res.status(500).json({ success: false, error: error.message });
     }
 };
+
+export const getCategories = async (req, res) => {
+    try {
+        const plants = await Plant.find();
+        const categories = plants.map(plant => plant.categorie);
+        const uniqueCategories = [...new Set(categories)]; // Remove duplicates
+        res.json({ success: true, categories: uniqueCategories });
+    } catch (error) {
+        console.error("Error fetching categories:", error.message);
+        res.status(500).json({ success: false, error: error.message });
+    }
+};
+
+export const filterPlantsByCategory = async (req, res) => {
+    try {
+        const { categorie } = req.query;
+        let filteredPlants;
+        if (categorie === 'All' || !categorie) {
+            filteredPlants = await Plant.find({});
+        } else {
+            filteredPlants = await Plant.find({ categorie });
+        }        res.json({ success: true, plants: filteredPlants });
+    } catch (error) {
+        console.error("Error filtering plants by category:", error.message);
+        res.status(500).json({ success: false, error: error.message });
+    }
+};
