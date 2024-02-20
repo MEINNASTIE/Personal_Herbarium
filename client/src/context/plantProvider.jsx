@@ -27,7 +27,7 @@ const PlantProvider = ({ children }) => {
         const response = await axios.get(`${baseUrl}/plant/`)
         setPlants(response.data.plants);
       } catch (error) {
-        console.error("Error fetching planst:", error);
+        console.error("Error fetching plants:", error);
       }
     };
 

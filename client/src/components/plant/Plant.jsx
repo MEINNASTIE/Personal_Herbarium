@@ -66,8 +66,6 @@ function PlantItem({ plant }){
                  Edit Plant
                 </button>
                  </div></>)}
-            
-
         </div>
     )
 }

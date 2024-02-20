@@ -1,11 +1,13 @@
 import Plant from "../models/Plant.js"
 
 export const handlegetplants = async (req, res) => {
-    try{
-        const plants = await Plant.find()
-        res.json({success: true, plants})
+    try {
+        const userId = req.user;
+        const plants = await Plant.find({ userId: userId });
+
+        res.json({ success: true, plants });
     } catch (error) {
-        console.error("Error getting all plants:", error.message);
+        console.error("Error getting plants by user ID:", error.message);
         res.status(500).json({ success: false, error: error.message });
     }
 }
@@ -28,7 +30,6 @@ export const handleCreate = async (req, res) => {
         console.error("Error creating plant:", error.message);
         res.status(500).json({ success: false, error: error.message });
     }
-
 }
 
 export const handleDelete = async (req, res) => {
