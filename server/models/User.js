@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
 
-const { Schema } = mongoose;
-
 const userSchemas = new mongoose.Schema({
     name: {
         type: String,
@@ -24,7 +22,6 @@ const userSchemas = new mongoose.Schema({
         enum: ['default', 'dark', 'green'], // change later theme names accordingly
         default: 'default',
       },
-    plants: [{ type: Schema.Types.ObjectId, ref: 'Plant' }]
 });
 const User = mongoose.model('User', userSchemas);
     

@@ -1,5 +1,4 @@
 import Plant from "../models/Plant.js"
-import User from "../models/User.js"
 
 export const handlegetplants = async (req, res) => {
     try{
@@ -17,9 +16,13 @@ export const handleCreate = async (req, res) => {
         if (req.file) { 
             plant.image = req.file.path;
         }
+        const userId = req.user;
+        plant.userId = userId;
+        
         const newPlant = new Plant(plant);
         await newPlant.save();
         res.json({ success: true, newPlant });
+     
 
     } catch (error) {
         console.error("Error creating plant:", error.message);

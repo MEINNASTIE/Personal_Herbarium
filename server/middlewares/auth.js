@@ -11,6 +11,8 @@ export default function auth(req, res, next) {
     );
     console.log("🚀 ~ decoded:", decoded);
 
+    console.log("User authenticated:", decoded.id);
+
     req.user = decoded.id;
 
     next();

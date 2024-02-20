@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../utils/api.js"
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "./userProvider.jsx";
 
 
 export const PlantContext = createContext(null);
@@ -10,7 +11,15 @@ export const usePlantContext = () => useContext(PlantContext);
 
 const PlantProvider = ({ children }) => {
     const [plants, setPlants] = useState([]);
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const { user } = useContext(UserContext);
+
+    useEffect(() => {
+      if (user) {
+          setLoading(false);
+      }
+    }, [user]);
 
 
     const getPlants = async () => {
@@ -28,6 +37,11 @@ const PlantProvider = ({ children }) => {
 
       const createPlantHandler = async (e) => {
         e.preventDefault(); 
+
+        if (!user) {
+          console.error("User is not loaded yet");
+          return;
+        }
         const body = new FormData();
         body.append("name", e.target.name.value);
         body.append("type", e.target.type.value);
@@ -35,9 +49,12 @@ const PlantProvider = ({ children }) => {
         body.append("latinName", e.target.latinName.value);
         body.append("description", e.target.description.value);
         body.append("plant-image", e.target["plant-image"].files[0]);
+        body.append("userId", user.id); 
       
         try {
-          const { data: newPlant } = await axios.post(`${baseUrl}/plant/create`, body);
+          const { data: newPlant } = await axios.post(`${baseUrl}/plant/create`, body, {
+            headers: {Authorization: localStorage.getItem("jwt_token")}
+          });
       
           setPlants(prevPlants => [...prevPlants, newPlant.newPlant]) ;       
           e.target.reset();
@@ -90,7 +107,9 @@ const PlantProvider = ({ children }) => {
         }
       };
 
-
+      if (loading) {
+        return <div>Loading...</div>; 
+      }
 
       return (
         <PlantContext.Provider value={{createPlantHandler,deletePlantHandler,editePLant,plants, searchPlants}}>

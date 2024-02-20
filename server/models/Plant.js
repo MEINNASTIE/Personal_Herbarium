@@ -10,6 +10,7 @@ const plantSchema = new Schema({
     description: {type: String,  trim: true}, 
     image: {type: String, }, 
     imagePublicId: { type: String },  
+    userId: { type: Schema.Types.ObjectId, ref: 'User' }
 },
 
       
