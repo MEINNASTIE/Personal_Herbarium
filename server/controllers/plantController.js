@@ -82,17 +82,26 @@ export const getPlantById = async (req, res) => {
     try {
         const plantId = req.params.plantId; 
         console.log("Plant ID:", plantId);
+        console.log("Request Params:", req.params);
 
-        const plant = await Plant.findById(plantId);
+        const plant = await Plant.findById(plantId).populate('userId');
+        console.log("Populated Plant:", plant);
+
         if (!plant) {
             return res.status(404).json({ message: 'Plant not found' });
         }
-        res.json({ success: true, plant }); 
+
+        const userName = plant.userId ? plant.userId.name : "Unknown";
+        console.log("User Name:", userName);
+
+        res.json({ success: true, plant, userName }); 
     } catch (err) {
         console.error("Error fetching plant by id:", err.message);
         res.status(500).json({ success: false, error: err.message }); 
     }
 };
+
+
 
 export const getCategories = async (req, res) => {
     console.log("getCategories")

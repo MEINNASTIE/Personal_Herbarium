@@ -17,7 +17,6 @@ const plantSchema = new Schema({
 {timestamps: true}
 )
 
-
 const Plant = mongoose.model('Plant', plantSchema);
 export default  Plant;
 

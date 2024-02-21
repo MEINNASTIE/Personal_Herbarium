@@ -31,7 +31,7 @@ function PlantItem({ plant }) {
                 if (plant) {
                     setLoadedPlant(plant);
                 } else {
-                    const response = await axios.get(`${baseUrl}/plant/${plantId}`);
+                    const response = await axios.get(`${baseUrl}/plant/plant/${plantId}`);
                     console.log("Plant data from backend:", response.data);
                     setLoadedPlant(response.data.plant);
                 }

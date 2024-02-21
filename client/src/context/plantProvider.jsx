@@ -23,6 +23,11 @@ const PlantProvider = ({ children }) => {
     }, [user]);
 
 
+    useEffect(() => {
+          getPlants();
+          getCategories();
+          }, []);
+
     const getPlants = async () => {
       try {
         const response = await axios.get(`${baseUrl}/plant/`, {
@@ -33,11 +38,6 @@ const PlantProvider = ({ children }) => {
         console.error("Error fetching plants:", error);
       }
     };
-
-    useEffect(() => {
-      getPlants();
-      getCategories();
-      }, []);
 
       const createPlantHandler = async (e) => {
         e.preventDefault(); 
@@ -98,18 +98,31 @@ const PlantProvider = ({ children }) => {
       }
       }
 
-      const searchPlants = async (query) => {
-        try {
-          let url = `${baseUrl}/plant/search`;
-          if (query.trim()) {
-            url += `?query=${query}`;
-          }
-          const response = await axios.get(url);
-          setPlants(response.data.plants);
-        } catch (error) {
-          console.error("Error searching plants:", error);
-        }
-      };
+    //  const searchPlants = async (query) => {
+    //     try {
+    //       let url = `${baseUrl}/plant/find/search`;
+    //       if (query.trim()) {
+    //         url += `?query=${query}`;
+    //       }
+    //       const response = await axios.get(url);
+    //       const data = response.data.plants;
+
+    //       const plantsWithUserNames = await Promise.all(
+    //         data.map(async (plant) => {
+    //           const userResponse = await axios.get(
+    //             `${baseUrl}/user/${plant.userId}`
+    //           );
+    //           const userData = userResponse.data;
+    //           return { ...plant, userName: userData.name };
+    //         })
+    //       );
+
+    //       return plantsWithUserNames;
+    //     } catch (error) {
+    //       console.error("Error searching plants:", error);
+    //       return [];
+    //     }
+    //   };
 
       if (loading) {
         return <div>Loading...</div>; 
@@ -130,7 +143,7 @@ const PlantProvider = ({ children }) => {
     };
 
       return (
-        <PlantContext.Provider value={{createPlantHandler,deletePlantHandler,editePLant,plants, searchPlants, filterPlantsByCategory, categories}}>
+        <PlantContext.Provider value={{createPlantHandler,deletePlantHandler,editePLant, plants, filterPlantsByCategory, categories}}>
           {children}
         </PlantContext.Provider>
       );
