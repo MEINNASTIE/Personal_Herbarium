@@ -39,8 +39,11 @@ export default function UserProvider({ children }) {
       });
 
       if (themeResponse.data.theme) {
-        setUser(prevUser => ({ ...prevUser, theme: themeResponse.data.theme }));
-        localStorage.setItem('user', JSON.stringify({ ...user, theme: themeResponse.data.theme }));
+        setUser(prevUser => {
+          const updatedUser = { ...prevUser, theme: themeResponse.data.theme };
+          localStorage.setItem('user', JSON.stringify(updatedUser));
+          return updatedUser;
+        });
       }
     } catch (error) {
       console.error('Error fetching theme:', error);
