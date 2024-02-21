@@ -43,7 +43,8 @@ export default function UserProvider({ children }) {
           const updatedUser = { ...prevUser, theme: themeResponse.data.theme };
           localStorage.setItem('user', JSON.stringify(updatedUser));
           return updatedUser;
-        })}
+        });
+      }
     } catch (error) {
       console.error('Error fetching theme:', error);
     }

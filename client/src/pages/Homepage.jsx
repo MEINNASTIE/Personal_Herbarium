@@ -79,7 +79,7 @@ export default function Homepage() {
             Add New Plant
           </button>
         </div>
-        <div className="mx-auto" ref={containerRef}>
+        <div className="mx-auto " ref={containerRef}>
           <PlantList />
         </div>
         <Footer />
