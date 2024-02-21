@@ -14,6 +14,7 @@ const PlantProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
+    const [categories, setCategories] = useState();
 
     useEffect(() => {
       if (user) {
@@ -24,7 +25,9 @@ const PlantProvider = ({ children }) => {
 
     const getPlants = async () => {
       try {
-        const response = await axios.get(`${baseUrl}/plant/`)
+        const response = await axios.get(`${baseUrl}/plant/`, {
+          headers: {Authorization: localStorage.getItem("jwt_token")}
+        })
         setPlants(response.data.plants);
       } catch (error) {
         console.error("Error fetching plants:", error);
@@ -33,6 +36,7 @@ const PlantProvider = ({ children }) => {
 
     useEffect(() => {
       getPlants();
+      getCategories();
       }, []);
 
       const createPlantHandler = async (e) => {
@@ -111,10 +115,14 @@ const PlantProvider = ({ children }) => {
         return <div>Loading...</div>; 
       }
 
-      const getCategories = async () => {
-        const response = await axios.get(`${baseUrl}/plant/categories`);
-        return response.data.categories; 
-    };
+      async function getCategories() {
+        console.log(baseUrl)
+        const response = await axios.get(`${baseUrl}/plant/find/categories`);
+        console.log(response)
+        // return response.data.categories; 
+        setCategories(response.data.categories)
+
+    }
 
     const filterPlantsByCategory = async (category) => {
       const response = await axios.get(`${baseUrl}/plant/filter?categorie=${category}`);
@@ -122,12 +130,10 @@ const PlantProvider = ({ children }) => {
     };
 
       return (
-        <PlantContext.Provider value={{createPlantHandler,deletePlantHandler,editePLant,plants, searchPlants, getCategories, filterPlantsByCategory}}>
+        <PlantContext.Provider value={{createPlantHandler,deletePlantHandler,editePLant,plants, searchPlants, filterPlantsByCategory, categories}}>
           {children}
         </PlantContext.Provider>
       );
-
-
 }
 
 export default PlantProvider;

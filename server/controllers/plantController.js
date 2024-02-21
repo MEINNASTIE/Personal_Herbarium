@@ -1,6 +1,8 @@
 import Plant from "../models/Plant.js"
+import mongoose from 'mongoose';
 
 export const handlegetplants = async (req, res) => {
+    console.log("Request.user", req.user)
     try {
         const userId = req.user;
         const plants = await Plant.find({ userId: userId });
@@ -62,12 +64,9 @@ export const SearchPlants = async (req, res) => {
     try {
         const { query } = req.query;
         let plants;
-        
-        // If there's a query, perform a search
         if (query) {
             plants = await Plant.find({ name: { $regex: query, $options: 'i' } });
         } else {
-            // Otherwise, fetch all plants
             plants = await Plant.find();
         }
         
@@ -78,11 +77,30 @@ export const SearchPlants = async (req, res) => {
     }
 };
 
+// get plant by id
+export const getPlantById = async (req, res) => {
+    try {
+        const plantId = req.params.plantId; 
+        console.log("Plant ID:", plantId);
+
+        const plant = await Plant.findById(plantId);
+        if (!plant) {
+            return res.status(404).json({ message: 'Plant not found' });
+        }
+        res.json({ success: true, plant }); 
+    } catch (err) {
+        console.error("Error fetching plant by id:", err.message);
+        res.status(500).json({ success: false, error: err.message }); 
+    }
+};
+
 export const getCategories = async (req, res) => {
+    console.log("getCategories")
     try {
         const plants = await Plant.find();
         const categories = plants.map(plant => plant.categorie);
         const uniqueCategories = [...new Set(categories)]; // Remove duplicates
+        console.log(uniqueCategories)
         res.json({ success: true, categories: uniqueCategories });
     } catch (error) {
         console.error("Error fetching categories:", error.message);
@@ -104,3 +122,4 @@ export const filterPlantsByCategory = async (req, res) => {
         res.status(500).json({ success: false, error: error.message });
     }
 };
+

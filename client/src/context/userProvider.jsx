@@ -29,6 +29,9 @@ export default function UserProvider({ children }) {
   const fetchTheme = async (userId) => {
     try {
       const storedToken = localStorage.getItem("jwt_token");
+      if (!storedToken || !userId) {
+        return; 
+      }
       const themeResponse = await axios.get(`${baseUrl}/auth/${userId}/theme`, {
         headers: {
           Authorization: `Bearer ${storedToken}`

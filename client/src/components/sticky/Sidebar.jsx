@@ -1,18 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { PlantContext } from '../../context/plantProvider.jsx';
 
 export default function Sidebar() {
     const [isOpen, setIsOpen] = useState(false);
-    const { getCategories, filterPlantsByCategory } = useContext(PlantContext); ///////
-    const [categories, setCategories] = useState([]);///////
-
-    useEffect(() => {
-        const fetchCategories = async () => {
-            const fetchedCategories = await getCategories();
-            setCategories(['All', ...fetchedCategories]);
-        };
-        fetchCategories();
-    }, []); ///////
+    const { categories, filterPlantsByCategory } = useContext(PlantContext); ///////
 
 
     const toggleSidebar = () => {
