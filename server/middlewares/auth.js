@@ -3,7 +3,7 @@ import "dotenv/config";
 
 export default function auth(req, res, next) {
   try {
-    console.log("Auth here", req.cookies);
+    console.log("Auth here", req.authorization);
 
     const decoded = jwt.verify(
       req.headers.authorization,

@@ -14,6 +14,7 @@ const PlantProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
+    const [categories, setCategories] = useState();
 
     useEffect(() => {
       if (user) {
@@ -22,22 +23,26 @@ const PlantProvider = ({ children }) => {
     }, [user]);
 
 
+    useEffect(() => {
+          getPlants();
+          getCategories();
+          }, []);
+
     const getPlants = async () => {
       try {
-        const response = await axios.get(`${baseUrl}/plant/`)
+        const response = await axios.get(`${baseUrl}/plant/`, {
+          headers: {Authorization: localStorage.getItem("jwt_token")}
+        })
         setPlants(response.data.plants);
       } catch (error) {
-        console.error("Error fetching planst:", error);
+        console.error("Error fetching plants:", error);
       }
     };
-
-    useEffect(() => {
-      getPlants();
-      }, []);
 
       const createPlantHandler = async (e) => {
         e.preventDefault(); 
 
+        console.log("createPlantHandler: ", user)
         if (!user) {
           console.error("User is not loaded yet");
           return;
@@ -50,6 +55,7 @@ const PlantProvider = ({ children }) => {
         body.append("description", e.target.description.value);
         body.append("plant-image", e.target["plant-image"].files[0]);
         body.append("userId", user.id); 
+        body.append("userName", user.name)
       
         try {
           const { data: newPlant } = await axios.post(`${baseUrl}/plant/create`, body, {
@@ -94,30 +100,39 @@ const PlantProvider = ({ children }) => {
       }
       }
 
-      const searchPlants = async (query) => {
-        try {
-          let url = `${baseUrl}/plant/search`;
-          if (query.trim()) {
-            url += `?query=${query}`;
-          }
-          const response = await axios.get(url);
-          setPlants(response.data.plants);
-        } catch (error) {
-          console.error("Error searching plants:", error);
-        }
-      };
-
       if (loading) {
         return <div>Loading...</div>; 
       }
 
+      async function getCategories() {
+        try {
+            const token = localStorage.getItem("jwt_token");
+            if (!token) {
+                console.log("No JWT token found");
+                return;
+            }
+                const response = await axios.get(`${baseUrl}/plant/find/categories`, {
+                headers: {
+                    Authorization: token
+                }
+            });
+                setCategories(response.data.categories);
+    
+        } catch (error) {
+            console.error("Error fetching categories:", error);
+        }
+    }
+
+    const filterPlantsByCategory = async (category) => {
+      const response = await axios.get(`${baseUrl}/plant/filter?categorie=${category}`);
+      setPlants(response.data.plants);
+    };
+
       return (
-        <PlantContext.Provider value={{createPlantHandler,deletePlantHandler,editePLant,plants, searchPlants}}>
+        <PlantContext.Provider value={{createPlantHandler,deletePlantHandler,editePLant, plants, filterPlantsByCategory, categories}}>
           {children}
         </PlantContext.Provider>
       );
-
-
 }
 
 export default PlantProvider;

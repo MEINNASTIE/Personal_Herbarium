@@ -29,15 +29,21 @@ export default function UserProvider({ children }) {
   const fetchTheme = async (userId) => {
     try {
       const storedToken = localStorage.getItem("jwt_token");
+      if (!storedToken || !userId) {
+        return; 
+      }
       const themeResponse = await axios.get(`${baseUrl}/auth/${userId}/theme`, {
         headers: {
-          Authorization: `Bearer ${storedToken}`
+          Authorization: storedToken
         }
       });
 
       if (themeResponse.data.theme) {
-        setUser(prevUser => ({ ...prevUser, theme: themeResponse.data.theme }));
-        localStorage.setItem('user', JSON.stringify({ ...user, theme: themeResponse.data.theme }));
+        setUser(prevUser => {
+          const updatedUser = { ...prevUser, theme: themeResponse.data.theme };
+          localStorage.setItem('user', JSON.stringify(updatedUser));
+          return updatedUser;
+        });
       }
     } catch (error) {
       console.error('Error fetching theme:', error);
