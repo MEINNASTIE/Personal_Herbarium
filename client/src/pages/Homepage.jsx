@@ -12,9 +12,11 @@ import Navbar from "../components/sticky/Navbar.jsx";
 import Footer from "../components/sticky/Footer.jsx";
 
 export default function Homepage() {
+  // For import on other pages use this code below
   const { user } = useContext(UserContext);
   const { theme } = user;
   const className = `${theme}-theme`;
+  // 
 
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -61,7 +63,7 @@ export default function Homepage() {
 
   return (
     <div className={`${className} flex flex-col h-screen justify-center text-center lg:mx-[150px]`}>
-      <div>
+      <div className="flex-grow">
         <div>
           <Navbar />
           <Sidebar /> 
@@ -90,8 +92,8 @@ export default function Homepage() {
         <div className="mx-auto" ref={containerRef}>
           <PlantList />
         </div>
-        <Footer />
       </div>
+      <Footer />
     </div>
   );
 }
