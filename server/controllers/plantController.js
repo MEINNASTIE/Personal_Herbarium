@@ -95,12 +95,14 @@ export const getPlantById = async (req, res) => {
 };
 
 export const getCategories = async (req, res) => {
-    console.log("getCategories")
     try {
-        const plants = await Plant.find();
-        const categories = plants.map(plant => plant.categorie);
-        const uniqueCategories = [...new Set(categories)]; // Remove duplicates
-        console.log(uniqueCategories)
+        const userId = req.user;
+        if (!userId) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+        const userPlants = await Plant.find({ userId });
+        const categories = userPlants.map(plant => plant.categorie);
+        const uniqueCategories = [...new Set(categories)];
         res.json({ success: true, categories: uniqueCategories });
     } catch (error) {
         console.error("Error fetching categories:", error.message);

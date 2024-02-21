@@ -12,7 +12,7 @@ plantRoutes.get("/search", SearchPlants);
 plantRoutes.post("/create", auth, uploadCloud.single("plant-image"),handleCreate);
 plantRoutes.delete("/delete/:plantId",handleDelete);
 plantRoutes.put("/edite/:plantId",handleEdite);
-plantRoutes.get("/find/categories", getCategories);
+plantRoutes.get("/find/categories", auth,getCategories);
 plantRoutes.get("/filter", filterPlantsByCategory);
 plantRoutes.get("/:plantId", getPlantById)
 
