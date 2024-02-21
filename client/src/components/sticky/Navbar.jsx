@@ -11,8 +11,8 @@ export default function Navbar() {
   const { user,  isLoggedIn, logout } = useContext(UserContext);
 
   return (
-    <div>
-    <nav className="flex items-center justify-between flex-wrap bg-gray-500 p-6 z-50">
+<div > 
+    <nav className="flex items-center justify-between  flex-wrap bg-gray-500 p-6 z-50">
       <div className="flex items-center">
           {isLoggedIn ? (
              <>

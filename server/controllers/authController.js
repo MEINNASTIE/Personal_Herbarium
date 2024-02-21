@@ -117,7 +117,7 @@ export const getUserTheme = async (req, res) =>
 
 export const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find({}, 'name email theme'); 
+    const users = await User.find({}, 'name'); 
     res.json({ success: true, users });
 
   } catch (error) {

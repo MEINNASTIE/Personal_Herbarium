@@ -125,3 +125,13 @@ export const filterPlantsByCategory = async (req, res) => {
     }
 };
 
+export const getPlantsByUserId = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const plants = await Plant.find({ userId: userId });
+        res.json({ success: true, plants });
+    } catch (error) {
+        console.error('Error fetching plants by user:', error);
+        res.status(500).json({ success: false, error: 'Internal server error' });
+    }
+};
