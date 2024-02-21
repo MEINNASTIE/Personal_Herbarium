@@ -1,6 +1,6 @@
 import express from "express";
 import uploadCloud from "../middlewares/multerCloudinary.js";
-import { handleCreate, handleDelete, handlegetplants,handleEdite, SearchPlants,getCategories,filterPlantsByCategory, getPlantById } from "../controllers/plantController.js";
+import { handleCreate, handleDelete, handlegetplants,handleEdite, SearchPlants,getCategories,filterPlantsByCategory, getPlantById,getPlantsByUserId } from "../controllers/plantController.js";
 
 import auth from "../middlewares/auth.js"
 
@@ -14,7 +14,9 @@ plantRoutes.delete("/delete/:plantId",handleDelete);
 plantRoutes.put("/edite/:plantId",handleEdite);
 plantRoutes.get("/find/categories", auth,getCategories);
 plantRoutes.get("/filter", filterPlantsByCategory);
+plantRoutes.get('/user/:userId', getPlantsByUserId);
 plantRoutes.get("/plant/:plantId", getPlantById)
+
 
 export default plantRoutes;
 

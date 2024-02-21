@@ -2,8 +2,6 @@ import { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
 import PlantList from "../components/plant/PlantList.jsx";
 import Sidebar from "../components/sticky/Sidebar";
-import Navbar from "../components/sticky/Navbar";
-import Footer from "../components/sticky/Footer";
 import { UserContext } from "../context/userProvider.jsx";
 import "../styles/Global.css";
 import PlantSearch from "../components/plant/PlantSearch.jsx";
@@ -63,7 +61,6 @@ export default function Homepage() {
     <div className={`${className} flex flex-col h-screen justify-center text-center mx-auto lg:mx-[300px]`}>
       <div className="flex flex-col justify-between flex-grow">
         <div>
-          <Navbar />
           <Sidebar /> 
           <div className="flex justify-between">
           <div className="relative">
@@ -90,7 +87,6 @@ export default function Homepage() {
         <div className="mx-auto " ref={containerRef}>
           <PlantList />
         </div>
-        <Footer />
       </div>
     </div>
   );
