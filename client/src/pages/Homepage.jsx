@@ -8,6 +8,8 @@ import PlantSearch from "../components/plant/PlantSearch.jsx";
 import Modal from "../components/plant/SearchButton.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLeaf, faSearch } from "@fortawesome/free-solid-svg-icons";
+import Navbar from "../components/sticky/Navbar.jsx";
+import Footer from "../components/sticky/Footer.jsx";
 
 export default function Homepage() {
   const { user } = useContext(UserContext);
@@ -58,9 +60,10 @@ export default function Homepage() {
   }, [page]);
 
   return (
-    <div className={`${className} flex flex-col h-screen justify-center text-center mx-auto lg:mx-[300px]`}>
-      <div className="flex flex-col justify-between flex-grow">
+    <div className={`${className} flex flex-col h-screen justify-center text-center lg:mx-[150px]`}>
+      <div>
         <div>
+          <Navbar />
           <Sidebar /> 
           <div className="flex justify-between">
           <div className="relative">
@@ -84,9 +87,10 @@ export default function Homepage() {
         </div>
         </div>
        
-        <div className="mx-auto " ref={containerRef}>
+        <div className="mx-auto" ref={containerRef}>
           <PlantList />
         </div>
+        <Footer />
       </div>
     </div>
   );
