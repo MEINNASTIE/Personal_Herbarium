@@ -12,7 +12,7 @@ export default function Sidebar() {
 
    
     return (
-        <div className="relative">
+        <div className="relative z-50">
             <button className="px-3 py-1 bg-gray-700 w-full text-white" onClick={toggleSidebar}>
                 {isOpen ? 'Close' : 'Open'}
             </button>

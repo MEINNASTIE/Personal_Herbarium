@@ -42,6 +42,7 @@ const PlantProvider = ({ children }) => {
       const createPlantHandler = async (e) => {
         e.preventDefault(); 
 
+        console.log("createPlantHandler: ", user)
         if (!user) {
           console.error("User is not loaded yet");
           return;
@@ -54,6 +55,7 @@ const PlantProvider = ({ children }) => {
         body.append("description", e.target.description.value);
         body.append("plant-image", e.target["plant-image"].files[0]);
         body.append("userId", user.id); 
+        body.append("userName", user.name)
       
         try {
           const { data: newPlant } = await axios.post(`${baseUrl}/plant/create`, body, {
@@ -97,32 +99,6 @@ const PlantProvider = ({ children }) => {
         console.error("Error editing plant:", error.response ? error.response.data : error);
       }
       }
-
-    //  const searchPlants = async (query) => {
-    //     try {
-    //       let url = `${baseUrl}/plant/find/search`;
-    //       if (query.trim()) {
-    //         url += `?query=${query}`;
-    //       }
-    //       const response = await axios.get(url);
-    //       const data = response.data.plants;
-
-    //       const plantsWithUserNames = await Promise.all(
-    //         data.map(async (plant) => {
-    //           const userResponse = await axios.get(
-    //             `${baseUrl}/user/${plant.userId}`
-    //           );
-    //           const userData = userResponse.data;
-    //           return { ...plant, userName: userData.name };
-    //         })
-    //       );
-
-    //       return plantsWithUserNames;
-    //     } catch (error) {
-    //       console.error("Error searching plants:", error);
-    //       return [];
-    //     }
-    //   };
 
       if (loading) {
         return <div>Loading...</div>; 
