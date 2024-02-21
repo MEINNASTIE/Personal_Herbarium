@@ -129,12 +129,22 @@ const PlantProvider = ({ children }) => {
       }
 
       async function getCategories() {
-        console.log(baseUrl)
-        const response = await axios.get(`${baseUrl}/plant/find/categories`);
-        console.log(response)
-        // return response.data.categories; 
-        setCategories(response.data.categories)
-
+        try {
+            const token = localStorage.getItem("jwt_token");
+            if (!token) {
+                console.log("No JWT token found");
+                return;
+            }
+                const response = await axios.get(`${baseUrl}/plant/find/categories`, {
+                headers: {
+                    Authorization: token
+                }
+            });
+                setCategories(response.data.categories);
+    
+        } catch (error) {
+            console.error("Error fetching categories:", error);
+        }
     }
 
     const filterPlantsByCategory = async (category) => {
