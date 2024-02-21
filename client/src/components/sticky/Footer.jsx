@@ -1,5 +1,6 @@
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -10,7 +11,8 @@ export default function Footer() {
           <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
             <h2 className="text-m font-semibold mb-4">Additional Research</h2>
             <ul className="text-[12px]">
-              <li>Will have links here</li>
+              <li className="hover:text-gray-600"><Link to="https://www.tdwg.org/standards/hispid3/" target="_blank"rel="noopener noreferrer">Guidelines Herbarium Information Standards</Link></li>
+              <li><Link to="https://collections.nmnh.si.edu/search/botany/#new-search" target="_blank" rel="noopener noreferrer" className="hover:text-gray-600">Smithsonian NMNH Research & Collections</Link></li>
             </ul>
           </div>
           <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">

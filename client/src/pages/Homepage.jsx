@@ -2,12 +2,12 @@ import { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
 import PlantList from "../components/plant/PlantList.jsx";
 import Sidebar from "../components/sticky/Sidebar";
-import Navbar from "../components/sticky/Navbar";
-import Footer from "../components/sticky/Footer";
 import { UserContext } from "../context/userProvider.jsx";
 import "../styles/Global.css";
 import PlantSearch from "../components/plant/PlantSearch.jsx";
 import Modal from "../components/plant/SearchButton.jsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLeaf, faSearch } from "@fortawesome/free-solid-svg-icons";
 
 export default function Homepage() {
   const { user } = useContext(UserContext);
@@ -21,8 +21,7 @@ export default function Homepage() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const toggleModal = () => setIsModalOpen(prevState => !prevState);
 
   const handleScroll = () => {
     const container = containerRef.current;
@@ -62,27 +61,32 @@ export default function Homepage() {
     <div className={`${className} flex flex-col h-screen justify-center text-center mx-auto lg:mx-[300px]`}>
       <div className="flex flex-col justify-between flex-grow">
         <div>
-          <Navbar />
-          <Sidebar />
-        </div>
-        <div className="flex justify-between">
-          <div>
-          <button onClick={openModal}>Open Modal</button>
-            <Modal isOpen={isModalOpen} onClose={closeModal}>
-              <PlantSearch />
-            </Modal>
+          <Sidebar /> 
+          <div className="flex justify-between">
+          <div className="relative">
+            <button onClick={toggleModal} className="text-[29px] py-2 px-4">
+              <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
+            </button>
+            {isModalOpen && (
+              <div className="absolute">
+                <Modal isOpen={isModalOpen} onClose={toggleModal}>
+                  <PlantSearch />
+                </Modal>
+              </div>
+            )}
           </div>
           <button
             onClick={() => navigate('/AddPlant')}
-            className="mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="mb-4 text-white hover:text-gray-300 text-white font-bold py-2 px-4 text-[30px]"
           >
-            Add New Plant
+           <FontAwesomeIcon icon={faLeaf} />
           </button>
         </div>
-        <div className="mx-auto" ref={containerRef}>
+        </div>
+       
+        <div className="mx-auto " ref={containerRef}>
           <PlantList />
         </div>
-        <Footer />
       </div>
     </div>
   );
