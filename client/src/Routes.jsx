@@ -4,6 +4,7 @@ import AddPlant from "./components/plant/AddPlant";
 import Login from '../src/pages/Login.jsx'
 import Register from '../src/pages/Register.jsx'
 import PlantItem from "./components/plant/Plant.jsx";
+import UsersPage from "./pages/UsersPage.jsx";
 
 export default function Routing() {
 
@@ -15,6 +16,8 @@ export default function Routing() {
       <Route path="/login" element={<Login/>} />
       <Route path="/register" element={<Register/>} />
       <Route path="/plant/:plantId" element={<PlantItem />} />
+      <Route path="/herbarium" element={<UsersPage/>} />
+
      </Routes> 
     </>
   );

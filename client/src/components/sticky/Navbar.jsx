@@ -35,7 +35,7 @@ export default function Navbar() {
         <div className="text-sm lg:flex-grow">
           <a href="#" className="block mt-4 text-white lg:inline-block lg:mt-0 hover:text-white mr-4">Logo</a>
           <a href="#" className="block mt-4 text-white lg:inline-block lg:mt-0 hover:text-white mr-4">Profile</a>
-          <a href="#" className="block mt-4 text-white lg:inline-block lg:mt-0 hover:text-white mr-4">Herbarium +</a>
+          <Link to="/herbarium" className="block mt-4 text-white lg:inline-block lg:mt-0 hover:text-white mr-4">Herbarium +</Link>
         </div>
       </div>
     </nav>
