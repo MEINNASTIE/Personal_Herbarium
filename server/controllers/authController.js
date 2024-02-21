@@ -1,9 +1,6 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "../lib/env-vars.js";
-
-
 
 export const handleRegister = async (req, res, next) => {
   try {

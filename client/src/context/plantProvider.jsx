@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../utils/api.js"
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "./userProvider.jsx";
 
 
 export const PlantContext = createContext(null);
@@ -10,24 +11,41 @@ export const usePlantContext = () => useContext(PlantContext);
 
 const PlantProvider = ({ children }) => {
     const [plants, setPlants] = useState([]);
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const { user } = useContext(UserContext);
+    const [categories, setCategories] = useState();
+
+    useEffect(() => {
+      if (user) {
+          setLoading(false);
+      }
+    }, [user]);
 
 
     const getPlants = async () => {
       try {
-        const response = await axios.get(`${baseUrl}/plant/`)
+        const response = await axios.get(`${baseUrl}/plant/`, {
+          headers: {Authorization: localStorage.getItem("jwt_token")}
+        })
         setPlants(response.data.plants);
       } catch (error) {
-        console.error("Error fetching planst:", error);
+        console.error("Error fetching plants:", error);
       }
     };
 
     useEffect(() => {
       getPlants();
+      getCategories();
       }, []);
 
       const createPlantHandler = async (e) => {
         e.preventDefault(); 
+
+        if (!user) {
+          console.error("User is not loaded yet");
+          return;
+        }
         const body = new FormData();
         body.append("name", e.target.name.value);
         body.append("type", e.target.type.value);
@@ -35,9 +53,12 @@ const PlantProvider = ({ children }) => {
         body.append("latinName", e.target.latinName.value);
         body.append("description", e.target.description.value);
         body.append("plant-image", e.target["plant-image"].files[0]);
+        body.append("userId", user.id); 
       
         try {
-          const { data: newPlant } = await axios.post(`${baseUrl}/plant/create`, body);
+          const { data: newPlant } = await axios.post(`${baseUrl}/plant/create`, body, {
+            headers: {Authorization: localStorage.getItem("jwt_token")}
+          });
       
           setPlants(prevPlants => [...prevPlants, newPlant.newPlant]) ;       
           e.target.reset();
@@ -90,25 +111,29 @@ const PlantProvider = ({ children }) => {
         }
       };
 
-      const getCategories = async () => {
-        const response = await axios.get(`${baseUrl}/plant/categories`);
-        return response.data.categories; 
-    };//////
+      if (loading) {
+        return <div>Loading...</div>; 
+      }
+
+      async function getCategories() {
+        console.log(baseUrl)
+        const response = await axios.get(`${baseUrl}/plant/find/categories`);
+        console.log(response)
+        // return response.data.categories; 
+        setCategories(response.data.categories)
+
+    }
 
     const filterPlantsByCategory = async (category) => {
       const response = await axios.get(`${baseUrl}/plant/filter?categorie=${category}`);
       setPlants(response.data.plants);
-  }; //////
-
-
+    };
 
       return (
-        <PlantContext.Provider value={{createPlantHandler,deletePlantHandler,editePLant,plants, searchPlants, getCategories, filterPlantsByCategory}}>
+        <PlantContext.Provider value={{createPlantHandler,deletePlantHandler,editePLant,plants, searchPlants, filterPlantsByCategory, categories}}>
           {children}
         </PlantContext.Provider>
       );
-
-
 }
 
 export default PlantProvider;

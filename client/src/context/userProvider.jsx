@@ -15,28 +15,37 @@ export default function UserProvider({ children }) {
   });
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const storedToken = localStorage.getItem("jwt_token");
-        if (storedToken && user._id) {
-          const themeResponse = await axios.get(`${baseUrl}/auth/${user._id}/theme`, {
-            headers: {
-              Authorization: `Bearer ${storedToken}`
-            }
-          });
-  
-          if (themeResponse.data.theme) {
-            setUser(prevUser => ({ ...prevUser, theme: themeResponse.data.theme }));
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching theme:', error);
+    const storedToken = localStorage.getItem("jwt_token");
+    const storedUser = localStorage.getItem("user");
+
+    if (storedToken && storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
+      setIsLoggedIn(true);
+      fetchTheme(parsedUser._id);
+    }
+  }, []); 
+
+  const fetchTheme = async (userId) => {
+    try {
+      const storedToken = localStorage.getItem("jwt_token");
+      if (!storedToken || !userId) {
+        return; 
       }
-    };
-  
-    fetchData();
-  }, [user._id]); 
-  
+      const themeResponse = await axios.get(`${baseUrl}/auth/${userId}/theme`, {
+        headers: {
+          Authorization: `Bearer ${storedToken}`
+        }
+      });
+
+      if (themeResponse.data.theme) {
+        setUser(prevUser => ({ ...prevUser, theme: themeResponse.data.theme }));
+        localStorage.setItem('user', JSON.stringify({ ...user, theme: themeResponse.data.theme }));
+      }
+    } catch (error) {
+      console.error('Error fetching theme:', error);
+    }
+  };
 
   const login = async (email, password) => {
     try {
@@ -48,34 +57,25 @@ export default function UserProvider({ children }) {
       console.log('Response data:', response.data);
   
       if (response.data.success) {
+        const userData = {
+          ...response.data.user,
+          theme: response.data.theme,
+        };
+  
         localStorage.setItem('jwt_token', response.data.token);
-        localStorage.setItem('user', JSON.stringify(response.data.user)); 
+        localStorage.setItem('user', JSON.stringify(userData));
   
-        // Fetch user's theme
-        const themeResponse = await axios.get(`${baseUrl}/auth/${response.data.user._id}/theme`, {
-          headers: {
-            Authorization: `Bearer ${response.data.token}`
-          }
-        });
-  
-        if (themeResponse.data.theme) {
-          console.log("Fetched theme:", themeResponse.data.theme);
-          setUser(prevUser => ({ ...prevUser, theme: themeResponse.data.theme }));
-          response.data.user.theme = themeResponse.data.theme;
-          localStorage.setItem('user', JSON.stringify(response.data.user));
-        }
-  
-        setUser(response.data.user); 
+        setUser(userData);
         setIsLoggedIn(true);
         navigate('/');
       }
   
-      return response.data; 
+      return response.data;
     } catch (error) {
       console.error('Error during login:', error);
-      return { success: false, error: 'Login failed' }; 
+      return { success: false, error: 'Login failed' };
     }
-  }; 
+  };
 
   const logout = () => {
     localStorage.removeItem('jwt_token');

@@ -6,18 +6,27 @@ import HamburgerMenu from './HamburgerMenu';
 import { useContext } from 'react';
 import { UserContext } from '../../context/userProvider';
 
+
 export default function Navbar() {
-  const { user } = useContext(UserContext);
+  const { user,  isLoggedIn, logout } = useContext(UserContext);
 
   return (
     <div>
     <nav className="flex items-center justify-between flex-wrap bg-gray-500 p-6 z-50">
       <div className="flex items-center">
-           {/* DUMMY LATER DISPOSE OFF */}
+          {isLoggedIn ? (
+             <>
+            <FontAwesomeIcon icon={faUser} className="text-white" />
+               <span className="text-white ml-2">{user ? user.name : 'User'}</span>
+               <button onClick={logout} className="text-white ml-4">Logout</button>
+           </>        
+            ) : (
+          <>
           <FontAwesomeIcon icon={faUser} className="text-white" />
-          <span className="text-white ml-2">{user ? user.name : 'User'}</span>
+          <span className="text-white ml-2">User Name</span>
           <Link to="/login" className="text-white ml-4">Login</Link>
-
+         </>
+       )}
       </div>
       <div className="lg:hidden">
         <HamburgerMenu />
@@ -34,23 +43,4 @@ export default function Navbar() {
   );
 }
 
-
-// CODE FOR LATER USE
-// import { useContext } from 'react';
-// import UserProvider from '../../context/userProvider.jsx'
-//  const { isLoggedIn, logout } = useContext(UserProvider);
-//   {isLoggedIn ? (
-//           <>
-//           {/* add change of user name and profile i */}
-//             <FontAwesomeIcon icon={faUser} className="text-white" />
-//             <span className="text-white ml-2">User Name</span>
-//             <button onClick={logout} className="text-white ml-4">Logout</button>
-//           </>
-//         ) : (
-//           <>
-//           <FontAwesomeIcon icon={faUser} className="text-white" />
-//           <span className="text-white ml-2">User Name</span>
-//           <Link to="/login" className="text-white ml-4">Login</Link>
-//           </>
-// )}
 

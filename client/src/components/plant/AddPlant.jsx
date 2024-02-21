@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import { PlantContext } from '../../context/plantProvider.jsx';
 
 export default function AddPlant() {
