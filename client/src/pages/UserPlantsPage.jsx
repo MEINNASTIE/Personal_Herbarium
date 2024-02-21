@@ -45,6 +45,5 @@ const UserPlantsPage = () => {
         </div>
         </>
     );
-    
 }
 export default UserPlantsPage;

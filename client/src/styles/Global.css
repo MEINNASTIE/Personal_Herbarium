@@ -9,9 +9,12 @@
     background-color: #333333; 
     color: #ffffff; 
 }
+
+
+/* Green theme */
   
 .green-theme {
-    background-color: #CED0AE;
+    background-color: #B0AED0;
     color: #ffffff;
 }
 
@@ -19,8 +22,23 @@
     color: black;
 }
 
+.green-theme .secondary {
+    background-color: #726EAA;
+}
+
+.green-theme .tertiary {
+    background-color: #BBB9D6;
+}
+
+.green-theme .quarto {
+    background-color: #3A3480;
+}
+
+.green-theme .secondary-text {
+    color: #3A3480;
+}
 
 /* to hide modal button */
 .modal-close-button {
     display: none;
-  }
+}

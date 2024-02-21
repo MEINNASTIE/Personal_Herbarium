@@ -1,8 +1,8 @@
-
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import Routes from './Routes.jsx'
 import './index.css'
+import "./styles/Global.css";
 import { BrowserRouter } from 'react-router-dom'
 import UserProvider from './context/userProvider.jsx'
 import PlantProvider from './context/plantProvider.jsx'
@@ -16,7 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         </PlantProvider>
       </UserProvider>
     </BrowserRouter>
-  </React.StrictMode>,
+  </React.StrictMode>
 )
 // Take note for React.StrictMode for it might need to be deleted for certain dependencies 
 // Don't forget to wrap Providers here

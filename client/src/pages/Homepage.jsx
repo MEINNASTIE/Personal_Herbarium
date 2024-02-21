@@ -4,6 +4,7 @@ import PlantList from "../components/plant/PlantList.jsx";
 import Sidebar from "../components/sticky/Sidebar";
 import { UserContext } from "../context/userProvider.jsx";
 import "../styles/Global.css";
+import "../index.css"
 import PlantSearch from "../components/plant/PlantSearch.jsx";
 import Modal from "../components/plant/SearchButton.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -61,16 +62,33 @@ export default function Homepage() {
     fetchData(); 
   }, [page]);
 
+  // background image solver - temporary fix 
+  // solves also any other tricky element
+
+  let backgroundImageUrl;
+  let imgUrl;
+
+  switch (theme) {
+    case 'green':
+      backgroundImageUrl = '/alien_bigger.png';
+      imgUrl = '/alien_search.png';
+      break;
+  }
+
+  const searchIcon = theme ? <img src={imgUrl} alt="Search Icon" /> : <FontAwesomeIcon icon={faSearch} />;
+
+  // 
+
   return (
-    <div className={`${className} flex flex-col h-screen justify-center text-center lg:mx-[150px]`}>
-      <div className="flex-grow">
+    <div className={`${className} alien flex flex-col h-screen justify-center text-center lg:mx-[150px]`} style={{ backgroundImage: `url(${backgroundImageUrl})`, backgroundRepeat: 'no-repeat', backgroundPosition: 'bottom right'}}>
+      <Navbar />
+      <div className="flex-grow pb-10">
         <div>
-          <Navbar />
           <Sidebar /> 
           <div className="flex justify-between">
           <div className="relative">
             <button onClick={toggleModal} className="text-[29px] py-2 px-4">
-              <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
+               {searchIcon}
             </button>
             {isModalOpen && (
               <div className="absolute">
@@ -93,7 +111,7 @@ export default function Homepage() {
           <PlantList />
         </div>
       </div>
-      <Footer />
+      <Footer className="py-4 lg:py-6"/>
     </div>
   );
 }
