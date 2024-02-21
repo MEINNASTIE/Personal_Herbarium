@@ -8,14 +8,15 @@ const plantRoutes = express.Router();
 
 
 plantRoutes.get("/", auth, handlegetplants);
-plantRoutes.get("/search", SearchPlants);
+plantRoutes.get("/find/search", SearchPlants);
 plantRoutes.post("/create", auth, uploadCloud.single("plant-image"),handleCreate);
 plantRoutes.delete("/delete/:plantId",handleDelete);
 plantRoutes.put("/edite/:plantId",handleEdite);
 plantRoutes.get("/find/categories", auth,getCategories);
 plantRoutes.get("/filter", filterPlantsByCategory);
-plantRoutes.get("/:plantId", getPlantById)
 plantRoutes.get('/user/:userId', getPlantsByUserId);
+plantRoutes.get("/plant/:plantId", getPlantById)
+
 
 export default plantRoutes;
 

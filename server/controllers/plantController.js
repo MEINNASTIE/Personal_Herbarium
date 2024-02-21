@@ -1,5 +1,4 @@
 import Plant from "../models/Plant.js"
-import mongoose from 'mongoose';
 
 export const handlegetplants = async (req, res) => {
     console.log("Request.user", req.user)
@@ -16,12 +15,17 @@ export const handlegetplants = async (req, res) => {
 
 export const handleCreate = async (req, res) => {
     try{
+        
+        console.log("Create plant: ",  req.body)
+
         const plant = req.body;
         if (req.file) { 
             plant.image = req.file.path;
         }
         const userId = req.user;
+        const userName = req.user;
         plant.userId = userId;
+        plant.userName = userName;
         
         const newPlant = new Plant(plant);
         await newPlant.save();
@@ -65,9 +69,9 @@ export const SearchPlants = async (req, res) => {
         const { query } = req.query;
         let plants;
         if (query) {
-            plants = await Plant.find({ name: { $regex: query, $options: 'i' } });
+            plants = await Plant.find({ name: { $regex: query, $options: 'i' } }).populate('userId', 'name');
         } else {
-            plants = await Plant.find();
+            plants = await Plant.find().populate('userId', 'name');
         }
         
         res.json({ success: true, plants });
@@ -82,17 +86,26 @@ export const getPlantById = async (req, res) => {
     try {
         const plantId = req.params.plantId; 
         console.log("Plant ID:", plantId);
+        console.log("Request Params:", req.params);
 
-        const plant = await Plant.findById(plantId);
+        const plant = await Plant.findById(plantId).populate('userId', 'name');
+        console.log("Populated Plant:", plant);
+
         if (!plant) {
             return res.status(404).json({ message: 'Plant not found' });
         }
-        res.json({ success: true, plant }); 
+
+        const userName = plant.userId ? plant.userId.name : "Unknown";
+        console.log("User Name:", userName);
+
+        res.json({ success: true, plant, userName }); 
     } catch (err) {
         console.error("Error fetching plant by id:", err.message);
         res.status(500).json({ success: false, error: err.message }); 
     }
 };
+
+
 
 export const getCategories = async (req, res) => {
     try {

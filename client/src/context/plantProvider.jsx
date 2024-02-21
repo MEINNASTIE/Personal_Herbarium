@@ -23,6 +23,11 @@ const PlantProvider = ({ children }) => {
     }, [user]);
 
 
+    useEffect(() => {
+          getPlants();
+          getCategories();
+          }, []);
+
     const getPlants = async () => {
       try {
         const response = await axios.get(`${baseUrl}/plant/`, {
@@ -34,14 +39,10 @@ const PlantProvider = ({ children }) => {
       }
     };
 
-    useEffect(() => {
-      getPlants();
-      getCategories();
-      }, []);
-
       const createPlantHandler = async (e) => {
         e.preventDefault(); 
 
+        console.log("createPlantHandler: ", user)
         if (!user) {
           console.error("User is not loaded yet");
           return;
@@ -54,6 +55,7 @@ const PlantProvider = ({ children }) => {
         body.append("description", e.target.description.value);
         body.append("plant-image", e.target["plant-image"].files[0]);
         body.append("userId", user.id); 
+        body.append("userName", user.name)
       
         try {
           const { data: newPlant } = await axios.post(`${baseUrl}/plant/create`, body, {
@@ -98,19 +100,6 @@ const PlantProvider = ({ children }) => {
       }
       }
 
-      const searchPlants = async (query) => {
-        try {
-          let url = `${baseUrl}/plant/search`;
-          if (query.trim()) {
-            url += `?query=${query}`;
-          }
-          const response = await axios.get(url);
-          setPlants(response.data.plants);
-        } catch (error) {
-          console.error("Error searching plants:", error);
-        }
-      };
-
       if (loading) {
         return <div>Loading...</div>; 
       }
@@ -140,7 +129,7 @@ const PlantProvider = ({ children }) => {
     };
 
       return (
-        <PlantContext.Provider value={{createPlantHandler,deletePlantHandler,editePLant,plants, searchPlants, filterPlantsByCategory, categories}}>
+        <PlantContext.Provider value={{createPlantHandler,deletePlantHandler,editePLant, plants, filterPlantsByCategory, categories}}>
           {children}
         </PlantContext.Provider>
       );

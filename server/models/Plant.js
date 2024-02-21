@@ -10,13 +10,12 @@ const plantSchema = new Schema({
     description: {type: String,  trim: true}, 
     image: {type: String, }, 
     imagePublicId: { type: String },  
-    userId: { type: Schema.Types.ObjectId, ref: 'User' }
+    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true }
 },
 
       
 {timestamps: true}
 )
-
 
 const Plant = mongoose.model('Plant', plantSchema);
 export default  Plant;

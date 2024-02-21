@@ -18,3 +18,9 @@
 .green-theme input {
     color: black;
 }
+
+
+/* to hide modal button */
+.modal-close-button {
+    display: none;
+  }

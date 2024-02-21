@@ -21,7 +21,7 @@ const userSchemas = new mongoose.Schema({
         type: String,
         enum: ['default', 'dark', 'green'], // change later theme names accordingly
         default: 'default',
-      },
+    },
 });
 const User = mongoose.model('User', userSchemas);
     
