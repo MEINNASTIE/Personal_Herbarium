@@ -8,6 +8,8 @@ import { UserContext } from "../context/userProvider.jsx";
 import "../styles/Global.css";
 import PlantSearch from "../components/plant/PlantSearch.jsx";
 import Modal from "../components/plant/SearchButton.jsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLeaf } from "@fortawesome/free-solid-svg-icons";
 
 export default function Homepage() {
   const { user } = useContext(UserContext);
@@ -74,9 +76,9 @@ export default function Homepage() {
           </div>
           <button
             onClick={() => navigate('/AddPlant')}
-            className="mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="mb-4 text-white hover:text-gray-300 text-white font-bold py-2 px-4 text-[30px]"
           >
-            Add New Plant
+           <FontAwesomeIcon icon={faLeaf} />
           </button>
         </div>
         <div className="mx-auto " ref={containerRef}>
