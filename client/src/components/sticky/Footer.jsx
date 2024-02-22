@@ -10,7 +10,7 @@ export default function Footer() {
   const className = `${theme}-theme`;
 
   return (
-    <footer className={`${className} secondary bg-gray-500 text-white p-6 z-50 text-center `}>
+    <footer className={`${className} limes secondary bg-gray-500 text-white p-6 z-50 text-center `}>
       <div className="container mx-auto">
         <div className="flex flex-wrap justify-between">
           <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">

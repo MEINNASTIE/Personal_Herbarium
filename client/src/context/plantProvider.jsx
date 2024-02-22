@@ -27,6 +27,7 @@ const PlantProvider = ({ children }) => {
           getPlants();
           getCategories();
           }, []);
+          
 
     const getPlants = async () => {
       try {

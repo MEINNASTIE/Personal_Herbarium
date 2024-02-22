@@ -14,7 +14,7 @@
 /* Green theme */
   
 .green-theme {
-    background-color: #B0AED0;
+    background-color: #BBB9D6;
     color: #ffffff;
 }
 
@@ -27,7 +27,7 @@
 }
 
 .green-theme .tertiary {
-    background-color: #BBB9D6;
+    background-color: #B0AED0;
 }
 
 .green-theme .quarto {
@@ -37,6 +37,53 @@
 .green-theme .secondary-text {
     color: #3A3480;
 }
+
+.green-theme .quinque {
+    background-color: white;
+}
+
+.green-theme .limes {
+    border: 3px solid black;
+}
+
+.green-theme .limes-some {
+    border-bottom: 3px solid black;
+    border-left: 3px solid black;
+    border-right: 3px solid black;
+}
+
+.green-theme .limes-main {
+    border-left: 3px solid black;
+    border-right: 3px solid black;
+}
+
+.green-theme .limes-some-right {
+    border-bottom: 3px solid black;
+    border-left: 3px solid black;
+    border-top: 3px solid black;
+    border-right: none;
+}
+
+.green-theme .limes-hamburger {
+    border-bottom: 3px solid black;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+}
+
+.green-theme .limes-bottom {
+    border-bottom: 3px solid black;
+}
+
+.green-theme .limes-bottom-top {
+    border-bottom: 3px solid black;
+    border-top: 3px solid black;
+}
+
+.green-theme .ater {
+    color: black;
+}
+
 
 /* to hide modal button */
 .modal-close-button {

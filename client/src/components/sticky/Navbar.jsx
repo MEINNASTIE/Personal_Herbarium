@@ -17,7 +17,7 @@ export default function Navbar() {
 
   return (
   <div > 
-      <nav className={`${className} secondary flex items-center justify-between flex-wrap bg-gray-500 p-6 z-50`}>
+      <nav className={`${className} secondary limes flex items-center justify-between flex-wrap bg-gray-500 p-6 relative`}>
         <div className="flex items-center">
             {isLoggedIn ? (
               <>

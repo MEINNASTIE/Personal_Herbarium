@@ -15,8 +15,8 @@ import Footer from "../components/sticky/Footer.jsx";
 export default function Homepage() {
   // For import on other pages use this code below
   const { user } = useContext(UserContext);
-  const { theme } = user;
-  const className = `${theme}-theme`;
+  const { theme } = user || {};
+  const className = theme ? `${theme}-theme` : '';
   // 
 
   const navigate = useNavigate();
@@ -65,24 +65,23 @@ export default function Homepage() {
   // background image solver - temporary fix 
   // solves also any other tricky element
 
-  let backgroundImageUrl;
-  let imgUrl;
+  let backgroundImageUrl = '';
+  let imgUrl = '';
 
-  switch (theme) {
-    case 'green':
-      backgroundImageUrl = '/alien_bigger.png';
-      imgUrl = '/alien_search.png';
-      break;
+  if (theme === 'green') {
+    backgroundImageUrl = '/alien_bigger.png';
+    imgUrl = '/alien_search.png';
   }
 
   const searchIcon = theme ? <img src={imgUrl} alt="Search Icon" /> : <FontAwesomeIcon icon={faSearch} />;
-
+  const alienImg = theme ? <img src={backgroundImageUrl} alt="alien" className="absolute right-40 top-80 transform rotate-6"></img> : null;
   // 
 
   return (
-    <div className={`${className} alien flex flex-col h-screen justify-center text-center lg:mx-[150px]`} style={{ backgroundImage: `url(${backgroundImageUrl})`, backgroundRepeat: 'no-repeat', backgroundPosition: 'bottom right'}}>
+    <div className={`${className} flex flex-col h-screen justify-center text-center lg:mx-[150px]`}>
+      {alienImg}
       <Navbar />
-      <div className="flex-grow pb-10">
+      <div className={`${className} limes-main flex-grow pb-10`}>
         <div>
           <Sidebar /> 
           <div className="flex justify-between">

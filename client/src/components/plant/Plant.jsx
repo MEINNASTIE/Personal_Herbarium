@@ -83,39 +83,88 @@ function PlantItem({ plant }) {
 
     return (
         <div className={`${className} flex flex-col h-screen lg:mx-[150px] justify-center`}>
-            <div className="flex-grow">
-                <Navbar />
+            <Navbar />
+            <div className={`${className} limes-main flex-grow`}>
             {editMode ? (
                 <>
-                    <input type="text" name="name" value={editedPlant.name} onChange={handleEditChange} className="block mb-2" />
-                    <input type="text" name="type" value={editedPlant.type} onChange={handleEditChange} className="block mb-2" />
-                    <input type="text" name="categorie" value={editedPlant.categorie} onChange={handleEditChange} className="block mb-2" />
-                    <input type="text" name="latinName" value={editedPlant.latinName} onChange={handleEditChange} className="block mb-2" />
-                    <textarea name="description" value={editedPlant.description} onChange={handleEditChange} className="block mb-2" />
-                    <button onClick={onSaveClick} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">Save</button>
-                    <button onClick={onCancelClick} className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Cancel</button>
+                <div className={`${className} limes flex flex-col items-center mt-[140px] gap-6 border border-1 mr-40 ml-40 rounded-lg shadow-md bg-transparent pt-4 pb-4`}>
+                <p className="text-white">Got a typo? Or simply wish to add something?</p>
+                        <input 
+                            type="text" 
+                            name="name" 
+                            value={editedPlant.name} 
+                            onChange={handleEditChange} 
+                            className={`${className} limes input border-white focus:border-gray-700 rounded-lg p-2 focus:outline-none placeholder:text-white`} 
+                            placeholder="Name" 
+                        />
+                        <input 
+                            type="text" 
+                            name="type" 
+                            value={editedPlant.type} 
+                            onChange={handleEditChange} 
+                            className={`${className} limes input border-white focus:border-gray-700 rounded-lg p-2 focus:outline-none placeholder:text-white`} 
+                            placeholder="Type" 
+                        />
+                        <input 
+                            type="text" 
+                            name="categorie" 
+                            value={editedPlant.categorie} 
+                            onChange={handleEditChange} 
+                            className={`${className} limes input border-white focus:border-gray-700 rounded-lg p-2 focus:outline-none placeholder:text-white`} 
+                            placeholder="Category" 
+                        />
+                        <input 
+                            type="text" 
+                            name="latinName" 
+                            value={editedPlant.latinName} 
+                            onChange={handleEditChange} 
+                            className={`${className} limes input border-white focus:border-gray-700 rounded-lg p-2 focus:outline-none placeholder:text-white`} 
+                            placeholder="Latin Name" 
+                        />
+                        <textarea 
+                            name="description" 
+                            value={editedPlant.description} 
+                            onChange={handleEditChange} 
+                            className={`${className} limes input border-white focus:border-gray-700 rounded-lg p-2 focus:outline-none placeholder:text-white`} 
+                            placeholder="Description" 
+                        />
+                        <div className="flex gap-4">
+                            <button 
+                                onClick={onSaveClick} 
+                                className={`${className} limes ater hover:bg-opacity-30 hover:bg-white text-white button border-white p-2 rounded-lg `} 
+                            >
+                                Save
+                            </button>
+                            <button 
+                                onClick={onCancelClick} 
+                                className={`${className} limes ater hover:bg-opacity-30 hover:bg-white text-white button border-white p-2 rounded-lg`} 
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
                 </>
             ) : (
                 <>
                     {loadedPlant && (
                         <>  
-                        <div className="bg-opacity-10 bg-white pb-10 mr-[150px] ml-[150px] mt-[100px] rounded-lg border border-1 shadow-md">
+                        <div className={`${className} limes pb-10 mr-[150px] ml-[150px] mt-[100px] rounded-lg border border-1 shadow-md bg-transparent`}>
                         <div className="flex justify-center items-center pt-10 relative">
                                 <div className="flex flex-col">
                                 {loadedPlant.image && (
-                                    <img src={loadedPlant.image} alt={loadedPlant.name} className="w-[650px] h-[450px] object-cover rounded-l-none rounded-tl-lg rounded-bl-lg" />
+                                    <img src={loadedPlant.image} alt={loadedPlant.name} className={`${className} limes-some-right w-[650px] h-[450px] object-cover rounded-l-none rounded-tl-lg rounded-bl-lg`} />
                                 )}
-                                <h3 className="text-[30px] font-bold absolute top-[85%] left-[4.5%] bg-opacity-50 bg-white p-2 pr-4 pl-4 rounded-lg">{loadedPlant.name}</h3>
+                                <h3 className={`${className} limes secondary-text text-[30px] font-bold absolute top-[84%] left-[4.5%] bg-opacity-50 bg-white p-2 pr-4 pl-4 rounded-lg`}>{loadedPlant.name}</h3>
                                 </div>
 
-                                <div className="bg-gray-400 w-[580px] h-[450px] pt-20  rounded-tr-lg rounded-br-lg pl-10">
+                                <div className={`${className} quinque limes secondary-text bg-gray-400 w-[580px] h-[450px] pt-20  rounded-tr-lg rounded-br-lg pl-10`}>
                                 <p><span className="font-bold text-[20px]">Type:</span> {loadedPlant.type}</p>
                                 <p><span className="font-bold text-[20px]">Category:</span> {loadedPlant.categorie}</p>
                                 <p><span className="font-bold text-[20px]">Latin Name:</span> {loadedPlant.latinName}</p>
                                 <p><span className="font-bold text-[20px]">Description:</span> {loadedPlant.description}</p>
                                 <div className="mt-40 text-right mr-3">
-                                    <button onClick={onDeleteClick} className="mt-4  hover:text-gray-700 text-white font-bold py-2 px-4 rounded mr-4 text-[30px]"><FontAwesomeIcon icon={faCircleMinus}></FontAwesomeIcon></button>
-                                    <button onClick={onEditeClick} className="mt-4  hover:text-gray-700 text-white font-bold py-2 px-4 rounded text-[30px]"><FontAwesomeIcon icon={faPencil} /></button>
+                                    <button onClick={onDeleteClick} className={`${className} quinque mt-4  hover:text-[#BCC490] secondary-text font-bold py-2 px-4 rounded mr-4 text-[30px]`}><FontAwesomeIcon icon={faCircleMinus}></FontAwesomeIcon></button>
+                                    <button onClick={onEditeClick} className={`${className} quinque mt-4  hover:text-[#BCC490] secondary-text font-bold py-2 px-4 rounded mr-4 text-[30px]`}><FontAwesomeIcon icon={faPencil} /></button>
                                 </div>
                             </div>
                         </div>

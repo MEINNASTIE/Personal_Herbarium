@@ -10,4 +10,4 @@ Jamilya - Users page  style/ User upload image / Forget pass page
 
 Issa - UserPlantsPage style / Add Plant style
 
-Tyhe - PlantOnDisplay style / Theme 
+Tyhe - PlantOnDisplay style / Theme +
