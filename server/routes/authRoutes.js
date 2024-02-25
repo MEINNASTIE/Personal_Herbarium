@@ -1,11 +1,15 @@
 import express from "express";
-import { getUserById, getUserTheme, handleLogin, handleRegister, updateUser,getAllUsers } from "../controllers/authController.js";
+import uploadCloud from "../middlewares/multerCloudinary.js";
+import { getUserById, getUserTheme, handleLogin, handleRegister,getForgorPage, updateUser,getAllUsers } from "../controllers/authController.js";
+
 
 
 const router = express.Router();
 
-router.post("/register", handleRegister);
+router.post("/register", uploadCloud.single("photo"),handleRegister);
+// router.post("/register", handleRegister);
 router.post("/login", handleLogin);
+router.post("/forgotpassword",getForgorPage)
 router.get("/all-users", getAllUsers)
 
 // theme handling routes
