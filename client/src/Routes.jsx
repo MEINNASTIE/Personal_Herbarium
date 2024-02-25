@@ -8,7 +8,7 @@ import PlantItem from "./components/plant/Plant.jsx";
 import UsersPage from "./pages/UsersPage.jsx";
 import UserPlantsPage from "./pages/UserPlantsPage.jsx";
 import ForgorPage from "./pages/ForgorPage.jsx";
-import Logintest from "./pages/Logintest.jsx";
+// import Logintest from "./pages/Logintest.jsx";
 export default function Routing() {
 
   return (
@@ -17,7 +17,7 @@ export default function Routing() {
       <Route path="/" element={<Homepage />} /> 
       <Route path="/AddPlant" element={<AddPlant />} />
       <Route path="/login" element={<Login/>} />
-      <Route path="/logintest" element={<Logintest/>}/>
+      {/* <Route path="/logintest" element={<Logintest/>}/> */}
       
       <Route path="/register" element={<Register/>} />
       <Route path="/forgotpassword" element={<ForgorPage/>} />
