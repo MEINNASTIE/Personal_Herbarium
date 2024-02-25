@@ -63,9 +63,9 @@ export default function Login() {
         <Link to={"/register"}>
         <button
             type="submit"
-            className="group relative w-full flex justify-center py-2 px-4   text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+            className="group relative w-full flex justify-center py-2 px-4   text-sm font-medium rounded-xl text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
           >
-           Sing up
+           Sign up
           </button>
         </Link>
       </div>
@@ -75,7 +75,7 @@ export default function Login() {
 
       <div className=" flex justify-center items-center flex-col">
         <img src={COVER_LOGO} className="w-40 h-40 flex "  />
-      <h1 className=" font-extrabold text-3xl text-gray-500">Welcome Back</h1>
+      <h1 className=" font-extrabold text-3xl text-gray-500">Welcome  Herbarium </h1>
       </div>
       <form className="mt-8 space-y-6 w-4/5 pl-20" onSubmit={handleSubmit}>
         <div className="email-wrapper">
@@ -92,7 +92,7 @@ export default function Login() {
             type="email"
             autoComplete="email"
             required
-            className="email appearance-none rounded-md min-h-12 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
+            className="email appearance-none rounded-xl min-h-12 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
             placeholder="Email address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -113,7 +113,7 @@ export default function Login() {
             type="password"
             autoComplete="current-password"
             required
-            className=" email appearance-none  min-h-12 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
+            className=" email appearance-none  min-h-12 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -123,7 +123,7 @@ export default function Login() {
         <p>{error}</p>
           <button
             type="submit"
-            className="group  items-center min-h-12 relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+            className="group  items-center min-h-12 relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-xl text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
           >
             Login
           </button>
