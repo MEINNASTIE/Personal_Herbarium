@@ -17,13 +17,9 @@ const userSchemas = new mongoose.Schema({
         type: String,
         required: true,
     },
-    photo:{
-        type: String,
-        // required: true,
-    },
     theme: {
         type: String,
-        enum: ['default', 'dark', 'green'], // change later theme names accordingly
+        enum: ['default', 'blossom', 'green'], // change later theme names accordingly
         default: 'default',
     },
 });

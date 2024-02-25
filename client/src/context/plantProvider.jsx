@@ -24,16 +24,12 @@ const PlantProvider = ({ children }) => {
 
 
     useEffect(() => {
-         if (!user._id) {
-          return;}
-      getPlants();
+          getPlants();
           getCategories();
           }, []);
           
 
     const getPlants = async () => {
-      if (!user._id) {
-        return;}
       try {
         const response = await axios.get(`${baseUrl}/plant/`, {
           headers: {Authorization: localStorage.getItem("jwt_token")}
