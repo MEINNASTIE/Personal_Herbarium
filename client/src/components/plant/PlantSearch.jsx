@@ -1,10 +1,15 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import axios from 'axios';
 import { baseUrl } from '../../utils/api';
+import { UserContext } from '../../context/userProvider';
 
 const PlantSearch = () => {
   const [query, setQuery] = useState('');
   const [plants, setPlants] = useState([]);
+
+  const { user } = useContext(UserContext);
+  const { theme } = user;
+  const className = `${theme}-theme`;
 
   const handleSearch = async () => {
     try {
@@ -26,7 +31,7 @@ const PlantSearch = () => {
   console.log("Plants State:", plants);
 
   return (
-    <div className="bg-gray-500 pt-2 pb-2 rounded-l-none rounded-t-none rounded-tr-lg rounded-br-lg ">
+    <div className={`${className} bg-gray-500 pt-2 pb-2 rounded-l-none rounded-t-none rounded-tr-lg rounded-br-lg secondary relative z-40`}>
       <p className="pb-2">Explore fellow plants</p>
       <input
         type="text"
@@ -40,7 +45,7 @@ const PlantSearch = () => {
       <div>
         <ul className="flex flex-col text-left">
           {plants.map((plant) => (
-            <li key={plant._id}>
+            <li key={plant._id} className="ml-4">
               <h3 className="text-lg font-bold mt-2">{plant.name}</h3>
               <p>Latin Name: {plant.latinName}</p>
               <p>Created by: {plant.userId.name}</p>

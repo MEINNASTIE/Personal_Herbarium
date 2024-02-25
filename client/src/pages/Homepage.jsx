@@ -4,15 +4,20 @@ import PlantList from "../components/plant/PlantList.jsx";
 import Sidebar from "../components/sticky/Sidebar";
 import { UserContext } from "../context/userProvider.jsx";
 import "../styles/Global.css";
+import "../index.css"
 import PlantSearch from "../components/plant/PlantSearch.jsx";
 import Modal from "../components/plant/SearchButton.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLeaf, faSearch } from "@fortawesome/free-solid-svg-icons";
+import Navbar from "../components/sticky/Navbar.jsx";
+import Footer from "../components/sticky/Footer.jsx";
 
 export default function Homepage() {
+  // For import on other pages use this code below
   const { user } = useContext(UserContext);
-  const { theme } = user;
-  const className = `${theme}-theme`;
+  const { theme } = user || {};
+  const className = theme ? `${theme}-theme` : '';
+  // 
 
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -57,15 +62,32 @@ export default function Homepage() {
     fetchData(); 
   }, [page]);
 
+  // background image solver - temporary fix 
+  // solves also any other tricky element
+
+  let backgroundImageUrl = '';
+  let imgUrl = '';
+
+  if (theme === 'green') {
+    backgroundImageUrl = '/alien_bigger.png';
+    imgUrl = '/alien_search.png';
+  }
+
+  const searchIcon = theme ? <img src={imgUrl} alt="Search Icon" /> : <FontAwesomeIcon icon={faSearch} />;
+  const alienImg = theme ? <img src={backgroundImageUrl} alt="alien" className="absolute right-40 top-80 transform rotate-6"></img> : null;
+  // 
+
   return (
-    <div className={`${className} flex flex-col h-screen justify-center text-center mx-auto lg:mx-[300px]`}>
-      <div className="flex flex-col justify-between flex-grow">
+    <div className={`${className} flex flex-col h-screen justify-center text-center lg:mx-[150px]`}>
+      {alienImg}
+      <Navbar />
+      <div className={`${className} limes-main flex-grow pb-10`}>
         <div>
           <Sidebar /> 
           <div className="flex justify-between">
           <div className="relative">
             <button onClick={toggleModal} className="text-[29px] py-2 px-4">
-              <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
+               {searchIcon}
             </button>
             {isModalOpen && (
               <div className="absolute">
@@ -84,10 +106,11 @@ export default function Homepage() {
         </div>
         </div>
        
-        <div className="mx-auto " ref={containerRef}>
+        <div className="mx-auto" ref={containerRef}>
           <PlantList />
         </div>
       </div>
+      <Footer className="py-4 lg:py-6"/>
     </div>
   );
 }

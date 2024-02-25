@@ -34,7 +34,7 @@ export default function UserProvider({ children }) {
       }
       const themeResponse = await axios.get(`${baseUrl}/auth/${userId}/theme`, {
         headers: {
-          Authorization: `Bearer ${storedToken}`
+          Authorization: storedToken
         }
       });
 
