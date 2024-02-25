@@ -4,25 +4,15 @@ import jwt from "jsonwebtoken";
 
 export const handleRegister = async (req, res, next) => {
   try {
-    console.log("Register here:", req.body);
-    let photo = "";
-    console.log("Register file:", req.file);
     const { email, password, name, theme } = req.body;
-    if (req.file) {
-      photo = req.file.path;
-    }
-    console.log("register: photo is", photo);
-    if (!email || !password || !name || !theme || !photo) {
+    if (!email || !password || !name || !theme) {
       return res.status(400).json("incorrect form submission");
     }
     const hash = await bcrypt.hash(password, 10);
-    const newUser = new User({ email, password: hash, name, theme, photo });
+    const newUser = new User({ email, password: hash, name, theme });
     const data = await newUser.save();
-
-    console.log("register: data is", data);
     res.json(data);
   } catch (err) {
-    console.log("Register error:", err.message);
     next(err);
   }
 };
@@ -72,16 +62,20 @@ export const updateUser = async (req, res) => {
   const { theme } = req.body;
 
   try {
-    const user = await User.findByIdAndUpdate(userId, { theme }, { new: true });
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { theme },
+      { new: true }
+    );
 
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ error: 'User not found' });
     }
 
     res.status(200).json(user);
   } catch (error) {
-    console.error("Error updating user:", error);
-    res.status(500).json({ error: "Internal server error" });
+    console.error('Error updating user:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
@@ -89,7 +83,7 @@ export const getUserById = async (req, res) => {
   const { userId } = req.params;
 
   try {
-    const user = await User.findById(userId).select("-password");
+    const user = await User.findById(userId).select('-password');
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
@@ -102,7 +96,8 @@ export const getUserById = async (req, res) => {
   }
 };
 
-export const getUserTheme = async (req, res) => {
+export const getUserTheme = async (req, res) =>
+ {
   const userId = req.params.userId;
 
   try {
@@ -119,39 +114,14 @@ export const getUserTheme = async (req, res) => {
   }
 };
 
+
 export const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find({}, "name");
+    const users = await User.find({}, 'name'); 
     res.json({ success: true, users });
-  } catch (error) {
-    console.error("Error fetching users:", error);
-    res.status(500).json({ success: false, error: "Internal server error" });
-  }
-};
-export const getForgorPage = async (req, res) => {
-  try {
-    console.log("ForgorPage:", req.body);
-    const { nameOrEmail } = req.body;
-    //console.log(await User.find())
-    // const user = await User.findOne({
-    //   $or: [{ email: req.body.nameOrEmail },
-    //      { name: req.body.nameOrEmail }],
-    // });
-    const user = await User.findOne({
-     email: nameOrEmail,
-    
-    });
-    console.log("user:", user);
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "20d",
-    
-    });
-    console.log("token:", token);
-
-    res.send({ success: true });
   } catch (error) {
-    console.log("error in ForgorPage:", error.message);
-    res.status(500).send({ success: false, error: error.message });
+    console.error('Error fetching users:', error);
+    res.status(500).json({ success: false, error: 'Internal server error' });
   }
 };
