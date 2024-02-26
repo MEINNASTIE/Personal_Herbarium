@@ -5,12 +5,9 @@
     color: #000000;
 }
   
-.blossom-theme {
-    background-color: #DAA5A0;
-    color: #FFFFFF;
-}
-.blossom-theme input{
-    color: black;
+.dark-theme {
+    background-color: #333333; 
+    color: #ffffff; 
 }
 
 
@@ -85,22 +82,6 @@
 
 .green-theme .ater {
     color: black;
-}
-
-.green-theme .limes-search {
-    border-bottom: 3px solid black;
-    border-top: 3px solid black;
-    border-right: 3px solid black;
-}
-
-.green-theme form {
-    background-color: #BBB9D6;
-    border: 3px solid black;
-}
-
-.green-theme form input {
-    outline: none;
-    border: 3px solid black;
 }
 
 

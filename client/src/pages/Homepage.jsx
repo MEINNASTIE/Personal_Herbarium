@@ -73,18 +73,8 @@ export default function Homepage() {
     imgUrl = '/alien_search.png';
   }
 
-  let searchIcon;
-  let paragraph;
-
-  if (theme === 'blossom') {
-  searchIcon = <FontAwesomeIcon icon={faSearch} />;
-  paragraph = <p>And I can buy myself flowers</p>
-
-  } else {
-  searchIcon = <img src={imgUrl} alt="Search Icon" />;
-  }
-
-  const alienImg = theme ? <img src={backgroundImageUrl} className="absolute right-40 top-80 transform rotate-6"></img> : null;
+  const searchIcon = theme ? <img src={imgUrl} alt="Search Icon" /> : <FontAwesomeIcon icon={faSearch} />;
+  const alienImg = theme ? <img src={backgroundImageUrl} alt="alien" className="absolute right-40 top-80 transform rotate-6"></img> : null;
   // 
 
   return (
@@ -96,9 +86,8 @@ export default function Homepage() {
           <Sidebar /> 
           <div className="flex justify-between">
           <div className="relative">
-            <button onClick={toggleModal} className="text-[29px] py-2 px-4 flex gap-10 items-center">
+            <button onClick={toggleModal} className="text-[29px] py-2 px-4">
                {searchIcon}
-               {paragraph}
             </button>
             {isModalOpen && (
               <div className="absolute">

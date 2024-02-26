@@ -157,12 +157,12 @@ function PlantItem({ plant }) {
                                 <h3 className={`${className} limes secondary-text text-[30px] font-bold absolute top-[84%] left-[4.5%] bg-opacity-50 bg-white p-2 pr-4 pl-4 rounded-lg`}>{loadedPlant.name}</h3>
                                 </div>
 
-                                <div className={`${className} quinque limes secondary-text bg-gray-400 w-[580px] h-[450px] pt-20  rounded-tr-lg rounded-br-lg pl-10 pr-10`}>
+                                <div className={`${className} quinque limes secondary-text bg-gray-400 w-[580px] h-[450px] pt-20  rounded-tr-lg rounded-br-lg pl-10`}>
                                 <p><span className="font-bold text-[20px]">Type:</span> {loadedPlant.type}</p>
                                 <p><span className="font-bold text-[20px]">Category:</span> {loadedPlant.categorie}</p>
                                 <p><span className="font-bold text-[20px]">Latin Name:</span> {loadedPlant.latinName}</p>
                                 <p><span className="font-bold text-[20px]">Description:</span> {loadedPlant.description}</p>
-                                <div className="mt-40 text-right mr-3 absolute top-[48%] right-[3%]">
+                                <div className="mt-40 text-right mr-3">
                                     <button onClick={onDeleteClick} className={`${className} quinque mt-4  hover:text-[#BCC490] secondary-text font-bold py-2 px-4 rounded mr-4 text-[30px]`}><FontAwesomeIcon icon={faCircleMinus}></FontAwesomeIcon></button>
                                     <button onClick={onEditeClick} className={`${className} quinque mt-4  hover:text-[#BCC490] secondary-text font-bold py-2 px-4 rounded mr-4 text-[30px]`}><FontAwesomeIcon icon={faPencil} /></button>
                                 </div>

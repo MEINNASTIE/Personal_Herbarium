@@ -1,35 +1,48 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { baseUrl } from "../utils/api.js";
-import { faEnvelope, faShield } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faEnvelope, faShield } from "@fortawesome/free-solid-svg-icons";
+ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import COVER_LOGO from "../assets/test.png";
 import COVER_VIDIO from "../assets/green.mp4";
+import { faCamera } from "@fortawesome/free-solid-svg-icons";
 
 export const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [photo, setPhoto] = useState(null);
 
   const [theme, setTheme] = useState("light");
 
-  const body = {
-    theme,
-  };
+  const photoDivRef = useRef(null);
+
 
   const navigate = useNavigate();
+const handleSetPhotoInput = (photo) => {  
+  setPhoto(photo);
+  photoDivRef.current.style.backgroundImage = `url(${URL.createObjectURL(photo)})`;
+};
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       // Make a POST request to your server's register endpoint
-      const response = await axios.post(`${baseUrl}/auth/register`, {
-        name,
-        email,
-        password,
-        theme,
-      });
+
+
+      const body = new FormData();
+        body.append("name", name);
+        body.append("email", email);
+        body.append("password", password);
+        if (photo){
+          body.append("photo", photo);
+        }   
+        body.append("theme", theme);
+   
+      
+      const response = await axios.post(`${baseUrl}/auth/register`, body);
       // theme handler set to body
       body, { headers: { "Content-Type": "application/json" } };
 
@@ -47,7 +60,7 @@ export const Register = () => {
     } catch (error) {
       console.error(
         "Registration failed:",
-        error.response?.data?.error || "Unknown error"
+        error.message || "Unknown error"
       );
     }
   };
@@ -96,6 +109,22 @@ export const Register = () => {
           </h1>
         </div>
         <form className="mt-8 space-y-8  w-4/5 pl-20 " onSubmit={handleSubmit}>
+        <div ref={photoDivRef} className="bg-cover w-[8rem] h-[8rem] flex justify-center items-center m-auto rounded-full bg-gray-100 ">
+            <label htmlFor="photo" className="opacity-5 text-8xl flex justify-center items-center">
+            <FontAwesomeIcon
+              icon={faCamera}
+              style={{ position: "absolute" }}
+            />
+            </label>
+            <input
+              type="file"
+              id="photo"
+              name="photo"
+              accept="image/*"
+              onChange={(e) => handleSetPhotoInput(e.target.files[0])}
+              className="hidden"
+            />
+          </div>
           <div>
             <label htmlFor="name" className="sr-only ">
               Full Name
@@ -106,7 +135,7 @@ export const Register = () => {
               type="text"
               autoComplete="name"
               required
-              className="appearance-none rounded-md min-h-12 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
+              className="appearance-none rounded-xl min-h-12 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
               placeholder="Full Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -122,7 +151,7 @@ export const Register = () => {
               type="email"
               autoComplete="email"
               required
-              className="appearance-none rounded-md  min-h-12 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
+              className="appearance-none rounded-xl  min-h-12 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
               placeholder="Email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -138,7 +167,7 @@ export const Register = () => {
               type="password"
               autoComplete="new-password"
               required
-              className="appearance-none  relative block w-full  min-h-12 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
+              className="appearance-none  relative block w-full  min-h-12 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -146,38 +175,39 @@ export const Register = () => {
           </div>
           <div>
             {/* We change the name themes later to fit our aesthetics ;) */}
-            <label>Select Theme</label>
+           
             <div className="flex justify-center gap-3">
+            <label>Select Theme</label>
               <span
                 onClick={() => setTheme("default")}
-                className={`rounded-md border-gray-300 bg-gray-400 p-2 cursor-pointer ${
+                className={`rounded-2xl border-gray-300 bg-gray-400 p-2 cursor-pointer ${
                   theme === "default" ? "bg-gray-600 text-white" : ""
                 }`}
               >
-                Default
+               
               </span>
               <span
                 onClick={() => setTheme("green")}
-                className={`rounded-md border-gray-300 bg-green-600 p-2 cursor-pointer ${
-                  theme === "green" ? "bg-gray-600 text-white" : ""
+                className={`rounded-2xl border-gray-300 bg-green-600  hover:bg-green-700 p-2 cursor-pointer ${
+                  theme === "green" ? "bg-green-700 text-white" : ""
                 }`}
               >
-                Green
+          
               </span>
               <span
-                onClick={() => setTheme("blossom")}
-                className={`rounded-md border-gray-300 bg-gray-700 p-2 cursor-pointer text-white ${
-                  theme === "blossom" ? "bg-gray-600 text-white" : ""
+                onClick={() => setTheme("dark")}
+                className={`rounded-xl border-gray-300 bg-gray-700 p-2 cursor-pointer text-white ${
+                  theme === "dark" ? "bg-gray-600 text-white" : ""
                 }`}
               >
-                Blossom
+               
               </span>
             </div>
           </div>
           <div>
             <button
               type="submit"
-              className="group relative w-full min-h-12 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+              className="group relative w-full min-h-12 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-xl text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
             >
               Register
             </button>
