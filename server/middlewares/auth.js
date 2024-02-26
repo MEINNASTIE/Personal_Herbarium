@@ -2,8 +2,9 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 
 export default function auth(req, res, next) {
+  console.log("Auth here", req.headers.authorization);
   try {
-    console.log("Auth here", req.authorization);
+    
 
     const decoded = jwt.verify(
       req.headers.authorization,

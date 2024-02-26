@@ -1,0 +1,1018 @@
+diff --git a/client/src/Routes.jsx b/client/src/Routes.jsx
+index cc20236..019517d 100644
+--- a/client/src/Routes.jsx
++++ b/client/src/Routes.jsx
+@@ -1,12 +1,14 @@
+ import { Route, Routes } from "react-router-dom";
+ import Homepage from "./pages/Homepage";
+ import AddPlant from "./components/plant/AddPlant";
+-import Login from '../src/pages/Login.jsx'
++import Login from '../src/pages/Login.jsx';
++
+ import Register from '../src/pages/Register.jsx'
+ import PlantItem from "./components/plant/Plant.jsx";
+ import UsersPage from "./pages/UsersPage.jsx";
+ import UserPlantsPage from "./pages/UserPlantsPage.jsx";
+-
++import ForgorPage from "./pages/ForgorPage.jsx";
++// import Logintest from "./pages/Logintest.jsx";
+ export default function Routing() {
+ 
+   return (
+@@ -15,7 +17,10 @@ export default function Routing() {
+       <Route path="/" element={<Homepage />} /> 
+       <Route path="/AddPlant" element={<AddPlant />} />
+       <Route path="/login" element={<Login/>} />
++      {/* <Route path="/logintest" element={<Logintest/>}/> */}
++      
+       <Route path="/register" element={<Register/>} />
++      <Route path="/forgotpassword" element={<ForgorPage/>} />
+       <Route path="/plant/:plantId" element={<PlantItem />} />
+       <Route path="/herbarium" element={<UsersPage/>} />
+       <Route path="/plants/user/:userId" element={<UserPlantsPage/>} />
+diff --git a/client/src/components/plant/AddPlant.jsx b/client/src/components/plant/AddPlant.jsx
+index 65275b9..db426e4 100644
+--- a/client/src/components/plant/AddPlant.jsx
++++ b/client/src/components/plant/AddPlant.jsx
+@@ -1,63 +1,51 @@
+ import { useContext } from 'react';
+ import { PlantContext } from '../../context/plantProvider.jsx';
+-import { UserContext } from '../../context/userProvider.jsx';
+-import Navbar from '../sticky/Navbar.jsx';
+-import Footer from '../sticky/Footer.jsx';
+ 
+ export default function AddPlant() {
+-    const { createPlantHandler } = useContext(PlantContext);
+-    const { user } = useContext(UserContext);
+-    const { theme } = user || {};
+-    const className = theme ? `${theme}-theme` : '';
+-
+-    return (
+-    <div className={`${className} flex flex-col h-screen justify-center text-center lg:mx-[150px]`}>
+-        <Navbar />
+-        <div className={`${className} limes-main flex-grow flex justify-center items-center h-screen`}>
+-        <div className={`${className}`}>
+-            <form onSubmit={createPlantHandler} className={`${className} w-full max-w-lg p-8 shadow-lg rounded-lg bg-white border border-gray-200`}>
+-                <input
+-                    type="text"
+-                    name="name"
+-                    placeholder="Plant name"
+-                    required
+-                    className="w-full p-2 mb-4 border-2 border-green-500 rounded"
+-                />
+-                <input
+-                    type="text"
+-                    name="type"
+-                    placeholder="Plant type"
+-                    className="w-full p-2 mb-4 border-2 border-green-500 rounded"
+-                />
+-                <input
+-                    type="text"
+-                    name="categorie"
+-                    placeholder="Category"
+-                    className="w-full p-2 mb-4 border-2 border-green-500 rounded"
+-                />
+-                <input
+-                    type="text"
+-                    name="latinName"
+-                    placeholder="Latin name"
+-                    required
+-                    className="w-full p-2 mb-4 border-2 border-green-500 rounded"
+-                />
+-                <input
+-                    type="text"
+-                    name="description"
+-                    placeholder="Description"
+-                    className="w-full p-2 mb-4 border-2 border-green-500 rounded"
+-                />
+-                <input
+-                    type="file"
+-                    name="plant-image"
+-                    className="w-full p-2 mb-4 border-2 border-green-500 rounded file:border-none file:bg-green-200 file:text-green-700"
+-                />
+-                <button type='submit' className="w-full bg-green-600 hover:bg-green-700 text-white p-2 rounded transition-colors duration-200">Add Plant</button>
++    const {createPlantHandler} = useContext(PlantContext)
++    return(
++        <div>
++            <form onSubmit={createPlantHandler}>
++            <input
++        type="text"
++        name="name"
++        placeholder="Plant name"
++        required
++        className="w-full p-2 mb-3 border border-gray-400 rounded"
++    />
++    <input
++        type="text"
++        name="type"
++        placeholder="Plant type"
++        className="w-full p-2 mb-3 border border-gray-400 rounded"
++    />
++    <input
++        type="text"
++        name="categorie"
++        placeholder="Category"
++        className="w-full p-2 mb-3 border border-gray-400 rounded"
++    />
++    <input
++        type="text"
++        name="latinName"
++        placeholder="Latin name"
++        required
++        className="w-full p-2 mb-3 border border-gray-400 rounded"
++    />
++    <input
++        type="text"
++        name="description"
++        placeholder="Description"
++        className="w-full p-2 mb-3 border border-gray-400 rounded"
++    />
++     <input
++        type="file"
++        name="plant-image"
++        className="w-full p-2 mb-3 border border-gray-400 rounded"
++    />
++    <button type='submit' className="bg-blue-500 text-white p-2 rounded">Add Plant</button>
+             </form>
+         </div>
+-        </div>
+-        <Footer />
+-    </div>
+-    );
++    )
++
+ }
+\ No newline at end of file
+diff --git a/client/src/components/plant/Plant.jsx b/client/src/components/plant/Plant.jsx
+index 093725c..059967d 100644
+--- a/client/src/components/plant/Plant.jsx
++++ b/client/src/components/plant/Plant.jsx
+@@ -157,12 +157,12 @@ function PlantItem({ plant }) {
+                                 <h3 className={`${className} limes secondary-text text-[30px] font-bold absolute top-[84%] left-[4.5%] bg-opacity-50 bg-white p-2 pr-4 pl-4 rounded-lg`}>{loadedPlant.name}</h3>
+                                 </div>
+ 
+-                                <div className={`${className} quinque limes secondary-text bg-gray-400 w-[580px] h-[450px] pt-20  rounded-tr-lg rounded-br-lg pl-10 pr-10`}>
++                                <div className={`${className} quinque limes secondary-text bg-gray-400 w-[580px] h-[450px] pt-20  rounded-tr-lg rounded-br-lg pl-10`}>
+                                 <p><span className="font-bold text-[20px]">Type:</span> {loadedPlant.type}</p>
+                                 <p><span className="font-bold text-[20px]">Category:</span> {loadedPlant.categorie}</p>
+                                 <p><span className="font-bold text-[20px]">Latin Name:</span> {loadedPlant.latinName}</p>
+                                 <p><span className="font-bold text-[20px]">Description:</span> {loadedPlant.description}</p>
+-                                <div className="mt-40 text-right mr-3 absolute top-[48%] right-[3%]">
++                                <div className="mt-40 text-right mr-3">
+                                     <button onClick={onDeleteClick} className={`${className} quinque mt-4  hover:text-[#BCC490] secondary-text font-bold py-2 px-4 rounded mr-4 text-[30px]`}><FontAwesomeIcon icon={faCircleMinus}></FontAwesomeIcon></button>
+                                     <button onClick={onEditeClick} className={`${className} quinque mt-4  hover:text-[#BCC490] secondary-text font-bold py-2 px-4 rounded mr-4 text-[30px]`}><FontAwesomeIcon icon={faPencil} /></button>
+                                 </div>
+diff --git a/client/src/components/plant/PlantList.jsx b/client/src/components/plant/PlantList.jsx
+index 4e634dd..d4c6ff5 100644
+--- a/client/src/components/plant/PlantList.jsx
++++ b/client/src/components/plant/PlantList.jsx
+@@ -6,7 +6,7 @@ function PlantList(){
+     const { plants } = useContext(PlantContext);
+ 
+     return (
+-        <div className="max-h-[500px] md:max-h-[5620px] lg:max-h-[590px] overflow-y-auto mr-6 ml-6 md:mr-20 md:ml-20 lg:mr-40 lg:ml-40">
++        <div className="max-h-[500px] md:max-h-[5620px] lg:max-h-[700px] overflow-y-auto mr-6 ml-6 md:mr-20 md:ml-20 lg:mr-40 lg:ml-40">
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                 {plants?.map(plant => (
+                     <PlantOnDisplay key={plant._id} plant={plant} />
+diff --git a/client/src/components/plant/PlantSearch.jsx b/client/src/components/plant/PlantSearch.jsx
+index 50a5859..f9f3914 100644
+--- a/client/src/components/plant/PlantSearch.jsx
++++ b/client/src/components/plant/PlantSearch.jsx
+@@ -6,7 +6,6 @@ import { UserContext } from '../../context/userProvider';
+ const PlantSearch = () => {
+   const [query, setQuery] = useState('');
+   const [plants, setPlants] = useState([]);
+-  const [loading, setLoading] = useState(false);
+ 
+   const { user } = useContext(UserContext);
+   const { theme } = user;
+@@ -14,7 +13,6 @@ const PlantSearch = () => {
+ 
+   const handleSearch = async () => {
+     try {
+-      setLoading(true);
+       let url = `${baseUrl}/plant/find/search`;
+       
+       if (query.trim()) {
+@@ -22,46 +20,43 @@ const PlantSearch = () => {
+       }
+ 
+       const response = await axios.get(url);
+-      const plantsData = response.data.plants || [];
++      const plantsData = response.data.plants; 
++
+       setPlants(plantsData);
+     } catch (error) {
+       console.error('Error searching plants:', error);
+-    } finally {
+-      setLoading(false);
+     }
+   };
+ 
++  console.log("Plants State:", plants);
++
+   return (
+-    <div className={`${className} limes-search bg-gray-500 pt-2 pb-2 rounded-l-none rounded-t-none rounded-tr-lg rounded-br-lg secondary relative z-40`}>
++    <div className={`${className} bg-gray-500 pt-2 pb-2 rounded-l-none rounded-t-none rounded-tr-lg rounded-br-lg secondary relative z-40`}>
+       <p className="pb-2">Explore fellow plants</p>
+       <input
+         type="text"
+         value={query}
+         onChange={(e) => setQuery(e.target.value)}
+         placeholder="Search Plants..."
+-        className={`${className} quinque limes-bottom-top p-2 focus:outline-none outline-none`}
++        className="p-2 focus:outline-none outline-none" 
+       />
+       <button onClick={handleSearch} className="pt-2">Search</button>
+       
+       <div>
+-        {loading && <p>Loading...</p>}
+-        {plants.length > 0 && (
+-          <ul className="flex flex-col text-left">
+-            {plants.map((plant) => (
+-              <li key={plant._id} className="ml-4">
+-                <h3 className="text-lg font-bold mt-2">{plant.name}</h3>
+-                <p>Latin Name: {plant.latinName}</p>
+-                <p>Created by: {plant.userId.name}</p>
+-              </li>
+-            ))}
+-          </ul>
+-        )}
++        <ul className="flex flex-col text-left">
++          {plants.map((plant) => (
++            <li key={plant._id} className="ml-4">
++              <h3 className="text-lg font-bold mt-2">{plant.name}</h3>
++              <p>Latin Name: {plant.latinName}</p>
++              <p>Created by: {plant.userId.name}</p>
++            </li>
++          ))}
++        </ul>
+       </div>
+     </div>
+   );
+ };
+ 
+-
+ export default PlantSearch;
+ 
+ 
+diff --git a/client/src/context/plantProvider.jsx b/client/src/context/plantProvider.jsx
+index 9f20ede..5c0bc2b 100644
+--- a/client/src/context/plantProvider.jsx
++++ b/client/src/context/plantProvider.jsx
+@@ -24,12 +24,16 @@ const PlantProvider = ({ children }) => {
+ 
+ 
+     useEffect(() => {
+-          getPlants();
++         if (!user._id) {
++          return;}
++      getPlants();
+           getCategories();
+           }, []);
+           
+ 
+     const getPlants = async () => {
++      if (!user._id) {
++        return;}
+       try {
+         const response = await axios.get(`${baseUrl}/plant/`, {
+           headers: {Authorization: localStorage.getItem("jwt_token")}
+diff --git a/client/src/pages/ForgorPage.jsx b/client/src/pages/ForgorPage.jsx
+new file mode 100644
+index 0000000..9ccc360
+--- /dev/null
++++ b/client/src/pages/ForgorPage.jsx
+@@ -0,0 +1,118 @@
++import { useState } from "react";
++import COVER_LOGO from "../assets/test.png";
++import COVER_VIDIO from "../assets/green.mp4";
++// import { useNavigate } from "react-router-dom";
++// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
++import axios from "axios";
++import { baseUrl } from "../utils/api.js";
++
++const ForgorPage = () => {
++  // const navigate = useNavigate();
++  const [nameOrEmail, setNameEmail] = useState("");
++  // const [email, setEmail] = useState("");
++  // const [password, setPassword] = useState("");
++  const handleSubmit = async (e) => {
++    e.preventDefault();
++    const response = await axios.post(`${baseUrl}/auth/forgotpassword`, {
++      nameOrEmail,
++    });
++
++    console.log("response", response);
++    if (response.data.success) {
++      alert("Please check your email to reset your password");
++    }
++    // navigate("/login");
++  };
++
++  return (
++    <div className="w-full h-screen flex p-10  items-center justify-center">
++      <div className="rounded-l-2xl relative flex flex-col justify-center w-2/5  h-[70rem]">
++        <div className="absolute top-[20%] left-[10%] flex flex-col ">
++          <h1 className="text-5xl text-white font-extrabold my-4">
++            Create And Get Information <br /> About Your Favorite Flowers
++          </h1>
++          <p className="text-xl text-white font-normal">
++            Adopt the peace of nature
++          </p>
++        </div>
++        <video
++          className="rounded-l-2xl w-auto  h-[70rem]  object-cover"
++          autoPlay
++          loop
++          muted
++        >
++          <source src={COVER_VIDIO} type="video/mp4" />
++        </video>
++      </div>
++
++      <div className="rounded-r-2xl bg-[#E0E0E0] flex flex-col justify-center p-4  w-2/5   h-[70rem]">
++        <div className=" flex justify-center items-center flex-col">
++          <img src={COVER_LOGO} className="w-40 h-40 flex " />
++          <h1 className=" font-extrabold text-3xl text-gray-500">
++            Let Change Your Password
++          </h1>
++        </div>
++        <form className="mt-8 space-y-8  w-4/5 pl-20 " onSubmit={handleSubmit}>
++          <div>
++            <label htmlFor="name" className="sr-only ">
++              Full Name
++            </label>
++            <input
++              id="name"
++              name="name"
++              type="text"
++              autoComplete="name"
++              required
++              className="appearance-none rounded-xl min-h-12 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
++              placeholder="Full Name"
++              value={nameOrEmail}
++              onChange={(e) => setNameEmail(e.target.value)}
++            />
++          </div>
++
++          {/* <div>
++                        <label htmlFor="email" className="sr-only">
++                            Email address
++                        </label>
++                        <input
++                            id="email"
++                            name="email"
++                            type="email"
++                            autoComplete="email"
++                            required
++                            className="appearance-none rounded-xl  min-h-12 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
++                            placeholder="Email address"
++                            value={email}
++                            onChange={(e) => setEmail(e.target.value)}
++                        />
++                    </div> */}
++          {/* <div>
++                        <label htmlFor="password" className="sr-only">
++                            Password
++                        </label>
++                        <input
++                            id="password"
++                            name="password"
++                            type="password"
++                            autoComplete="new-password"
++                            required
++                            className="appearance-none  relative block w-full  min-h-12 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
++                            placeholder="Password"
++                            value={password}
++                            onChange={(e) => setPassword(e.target.value)}
++                        />
++                    </div> */}
++          <div>
++            <button
++              type="submit"
++              className="group relative w-full flex justify-center py-2 px-4   text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
++            >
++              Sent a Message
++            </button>
++          </div>
++        </form>
++      </div>
++    </div>
++  );
++};
++export default ForgorPage;
+diff --git a/client/src/pages/Homepage.jsx b/client/src/pages/Homepage.jsx
+index e538622..b79ab18 100644
+--- a/client/src/pages/Homepage.jsx
++++ b/client/src/pages/Homepage.jsx
+@@ -73,18 +73,8 @@ export default function Homepage() {
+     imgUrl = '/alien_search.png';
+   }
+ 
+-  let searchIcon;
+-  let paragraph;
+-
+-  if (theme === 'blossom') {
+-  searchIcon = <FontAwesomeIcon icon={faSearch} />;
+-  paragraph = <p>And I can buy myself flowers</p>
+-
+-  } else {
+-  searchIcon = <img src={imgUrl} alt="Search Icon" />;
+-  }
+-
+-  const alienImg = theme ? <img src={backgroundImageUrl} className="absolute right-40 top-80 transform rotate-6"></img> : null;
++  const searchIcon = theme ? <img src={imgUrl} alt="Search Icon" /> : <FontAwesomeIcon icon={faSearch} />;
++  const alienImg = theme ? <img src={backgroundImageUrl} alt="alien" className="absolute right-40 top-80 transform rotate-6"></img> : null;
+   // 
+ 
+   return ( 
+@@ -96,9 +86,8 @@ export default function Homepage() {
+           <Sidebar /> 
+           <div className="flex justify-between">
+           <div className="relative">
+-            <button onClick={toggleModal} className="text-[29px] py-2 px-4 flex gap-10 items-center">
++            <button onClick={toggleModal} className="text-[29px] py-2 px-4">
+                {searchIcon}
+-               {paragraph}
+             </button>
+             {isModalOpen && (
+               <div className="absolute">
+diff --git a/client/src/pages/Login.jsx b/client/src/pages/Login.jsx
+index e60ae94..9eb3e5e 100644
+--- a/client/src/pages/Login.jsx
++++ b/client/src/pages/Login.jsx
+@@ -63,9 +63,9 @@ export default function Login() {
+         <Link to={"/register"}>
+         <button
+             type="submit"
+-            className="group relative w-full flex justify-center py-2 px-4   text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
++            className="group relative w-full flex justify-center py-2 px-4   text-sm font-medium rounded-xl text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+           >
+-           Sing up
++           Sign up
+           </button>
+         </Link>
+       </div>
+@@ -75,7 +75,7 @@ export default function Login() {
+ 
+       <div className=" flex justify-center items-center flex-col">
+         <img src={COVER_LOGO} className="w-40 h-40 flex "  />
+-      <h1 className=" font-extrabold text-3xl text-gray-500">Welcome Back</h1>
++      <h1 className=" font-extrabold text-3xl text-gray-500">Welcome  Herbarium </h1>
+       </div>
+       <form className="mt-8 space-y-6 w-4/5 pl-20" onSubmit={handleSubmit}>
+         <div className="email-wrapper">
+@@ -92,7 +92,7 @@ export default function Login() {
+             type="email"
+             autoComplete="email"
+             required
+-            className="email appearance-none rounded-md min-h-12 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
++            className="email appearance-none rounded-xl min-h-12 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
+             placeholder="Email address"
+             value={email}
+             onChange={(e) => setEmail(e.target.value)}
+@@ -113,7 +113,7 @@ export default function Login() {
+             type="password"
+             autoComplete="current-password"
+             required
+-            className=" email appearance-none  min-h-12 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
++            className=" email appearance-none  min-h-12 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
+             placeholder="Password"
+             value={password}
+             onChange={(e) => setPassword(e.target.value)}
+@@ -123,7 +123,7 @@ export default function Login() {
+         <p>{error}</p>
+           <button
+             type="submit"
+-            className="group  items-center min-h-12 relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
++            className="group  items-center min-h-12 relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-xl text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+           >
+             Login
+           </button>
+diff --git a/client/src/pages/Register.jsx b/client/src/pages/Register.jsx
+index f1db28c..e709bf2 100644
+--- a/client/src/pages/Register.jsx
++++ b/client/src/pages/Register.jsx
+@@ -1,35 +1,48 @@
+-import { useState } from "react";
++import { useRef, useState } from "react";
+ import axios from "axios";
+ import { Link, useNavigate } from "react-router-dom";
+ import { baseUrl } from "../utils/api.js";
+-import { faEnvelope, faShield } from "@fortawesome/free-solid-svg-icons";
+-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
++// import { faEnvelope, faShield } from "@fortawesome/free-solid-svg-icons";
++ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+ import COVER_LOGO from "../assets/test.png";
+ import COVER_VIDIO from "../assets/green.mp4";
++import { faCamera } from "@fortawesome/free-solid-svg-icons";
+ 
+ export const Register = () => {
+   const [name, setName] = useState("");
+   const [email, setEmail] = useState("");
+   const [password, setPassword] = useState("");
++  const [photo, setPhoto] = useState(null);
+ 
+   const [theme, setTheme] = useState("light");
+ 
+-  const body = {
+-    theme,
+-  };
++  const photoDivRef = useRef(null);
++
+ 
+   const navigate = useNavigate();
++const handleSetPhotoInput = (photo) => {  
++  setPhoto(photo);
++  photoDivRef.current.style.backgroundImage = `url(${URL.createObjectURL(photo)})`;
++};
++
+   const handleSubmit = async (e) => {
+     e.preventDefault();
+ 
+     try {
+       // Make a POST request to your server's register endpoint
+-      const response = await axios.post(`${baseUrl}/auth/register`, {
+-        name,
+-        email,
+-        password,
+-        theme,
+-      });
++
++
++      const body = new FormData();
++        body.append("name", name);
++        body.append("email", email);
++        body.append("password", password);
++        if (photo){
++          body.append("photo", photo);
++        }   
++        body.append("theme", theme);
++   
++      
++      const response = await axios.post(`${baseUrl}/auth/register`, body);
+       // theme handler set to body
+       body, { headers: { "Content-Type": "application/json" } };
+ 
+@@ -47,7 +60,7 @@ export const Register = () => {
+     } catch (error) {
+       console.error(
+         "Registration failed:",
+-        error.response?.data?.error || "Unknown error"
++        error.message || "Unknown error"
+       );
+     }
+   };
+@@ -96,6 +109,22 @@ export const Register = () => {
+           </h1>
+         </div>
+         <form className="mt-8 space-y-8  w-4/5 pl-20 " onSubmit={handleSubmit}>
++        <div ref={photoDivRef} className="bg-cover w-[8rem] h-[8rem] flex justify-center items-center m-auto rounded-full bg-gray-100 ">
++            <label htmlFor="photo" className="opacity-5 text-8xl flex justify-center items-center">
++            <FontAwesomeIcon
++              icon={faCamera}
++              style={{ position: "absolute" }}
++            />
++            </label>
++            <input
++              type="file"
++              id="photo"
++              name="photo"
++              accept="image/*"
++              onChange={(e) => handleSetPhotoInput(e.target.files[0])}
++              className="hidden"
++            />
++          </div>
+           <div>
+             <label htmlFor="name" className="sr-only ">
+               Full Name
+@@ -106,7 +135,7 @@ export const Register = () => {
+               type="text"
+               autoComplete="name"
+               required
+-              className="appearance-none rounded-md min-h-12 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
++              className="appearance-none rounded-xl min-h-12 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
+               placeholder="Full Name"
+               value={name}
+               onChange={(e) => setName(e.target.value)}
+@@ -122,7 +151,7 @@ export const Register = () => {
+               type="email"
+               autoComplete="email"
+               required
+-              className="appearance-none rounded-md  min-h-12 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
++              className="appearance-none rounded-xl  min-h-12 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
+               placeholder="Email address"
+               value={email}
+               onChange={(e) => setEmail(e.target.value)}
+@@ -138,7 +167,7 @@ export const Register = () => {
+               type="password"
+               autoComplete="new-password"
+               required
+-              className="appearance-none  relative block w-full  min-h-12 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
++              className="appearance-none  relative block w-full  min-h-12 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
+               placeholder="Password"
+               value={password}
+               onChange={(e) => setPassword(e.target.value)}
+@@ -146,38 +175,39 @@ export const Register = () => {
+           </div>
+           <div>
+             {/* We change the name themes later to fit our aesthetics ;) */}
+-            <label>Select Theme</label>
++           
+             <div className="flex justify-center gap-3">
++            <label>Select Theme</label>
+               <span
+                 onClick={() => setTheme("default")}
+-                className={`rounded-md border-gray-300 bg-gray-400 p-2 cursor-pointer ${
++                className={`rounded-2xl border-gray-300 bg-gray-400 p-2 cursor-pointer ${
+                   theme === "default" ? "bg-gray-600 text-white" : ""
+                 }`}
+               >
+-                Default
++               
+               </span>
+               <span
+                 onClick={() => setTheme("green")}
+-                className={`rounded-md border-gray-300 bg-green-600 p-2 cursor-pointer ${
+-                  theme === "green" ? "bg-gray-600 text-white" : ""
++                className={`rounded-2xl border-gray-300 bg-green-600  hover:bg-green-700 p-2 cursor-pointer ${
++                  theme === "green" ? "bg-green-700 text-white" : ""
+                 }`}
+               >
+-                Green
++          
+               </span>
+               <span
+-                onClick={() => setTheme("blossom")}
+-                className={`rounded-md border-gray-300 bg-gray-700 p-2 cursor-pointer text-white ${
+-                  theme === "blossom" ? "bg-gray-600 text-white" : ""
++                onClick={() => setTheme("dark")}
++                className={`rounded-xl border-gray-300 bg-gray-700 p-2 cursor-pointer text-white ${
++                  theme === "dark" ? "bg-gray-600 text-white" : ""
+                 }`}
+               >
+-                Blossom
++               
+               </span>
+             </div>
+           </div>
+           <div>
+             <button
+               type="submit"
+-              className="group relative w-full min-h-12 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
++              className="group relative w-full min-h-12 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-xl text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+             >
+               Register
+             </button>
+diff --git a/client/src/pages/UserPlantsPage.jsx b/client/src/pages/UserPlantsPage.jsx
+index e47c80f..32bbd2a 100644
+--- a/client/src/pages/UserPlantsPage.jsx
++++ b/client/src/pages/UserPlantsPage.jsx
+@@ -1,18 +1,13 @@
+-import axios from 'axios';
+-
++import  { useEffect, useState } from 'react';
+ import { useParams } from 'react-router-dom';
++import axios from 'axios';
+ import { baseUrl } from '../utils/api.js';
+ import Navbar from '../components/sticky/Navbar.jsx';
+ import Footer from '../components/sticky/Footer.jsx';
+-import { useContext, useEffect, useState } from 'react';
+-import { UserContext } from '../context/userProvider.jsx';
+ 
+ const UserPlantsPage = () => {
+     const { userId } = useParams();
+     const [plants, setPlants] = useState([]);
+-    const { user } = useContext(UserContext);
+-    const { theme } = user || {};
+-    const className = theme ? `${theme}-theme` : '';
+ 
+     useEffect(() => {
+         const fetchPlants = async () => {
+@@ -23,30 +18,26 @@ const UserPlantsPage = () => {
+                 console.error('Error fetching plants:', error);
+             }
+         };
++
+         fetchPlants();
+     }, [userId]);
+     return (
+-        <>
+-        <div className={`${className} lg:mx-[150px] flex flex-col min-h-screen`}>
++        <> 
++        <div className="lg:mx-[150px] flex flex-col min-h-screen">
+             <div className="flex-grow">
+             <Navbar/>
+-        <div className="flex-grow">
+-            <h1 className="text-center text-2xl font-bold my-5 text-green-800">Plants Created by User</h1>
+-                <div className="flex flex-wrap justify-center gap-10 px-5">
++            <div>
++                <h1>Plants Created by User</h1>
++                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+                     {plants.map(plant => (
+-                    <div key={plant._id} className="border border-green-500 rounded-lg p-4 max-w-sm w-full bg-green-100 shadow-lg">
+-                    {plant.image && (
+-                        <img src={plant.image} alt={plant.name} className="w-full h-64 object-contain rounded-md mb-4" />
+-                    )}
+-                    <div className="pl-10">
+-                    <h3 className="text-lg font-bold mt-2">{plant.name}</h3>
+-                    <p>Type: {plant.type}</p>
+-                    <p>Category: {plant.categorie}</p>
+-                    <p>Latin Name: {plant.latinName}</p>
+-                    <p>Description: {plant.description}</p>
+-                    </div>
+-                    </div>
+-                     ))}
++                        <div key={plant._id} style={{ border: '1px solid #ccc', borderRadius: '8px', padding: '20px', width: '200px' }}>
++                            <img src={plant.image} alt={plant.name} style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '5px' }} />
++                            <h3>{plant.name}</h3>
++                            <p>Type: {plant.type}</p>
++                            <p>Category: {plant.categorie}</p>
++                        
++                        </div>
++                    ))}
+                 </div>
+             </div>
+             </div>
+diff --git a/client/src/styles/Global.css b/client/src/styles/Global.css
+index 141a631..87fab81 100644
+--- a/client/src/styles/Global.css
++++ b/client/src/styles/Global.css
+@@ -5,12 +5,9 @@
+     color: #000000;
+ }
+   
+-.blossom-theme {
+-    background-color: #DAA5A0;
+-    color: #FFFFFF;
+-}
+-.blossom-theme input{
+-    color: black;
++.dark-theme {
++    background-color: #333333; 
++    color: #ffffff; 
+ }
+ 
+ 
+@@ -87,22 +84,6 @@
+     color: black;
+ }
+ 
+-.green-theme .limes-search {
+-    border-bottom: 3px solid black;
+-    border-top: 3px solid black;
+-    border-right: 3px solid black;
+-}
+-
+-.green-theme form {
+-    background-color: #BBB9D6;
+-    border: 3px solid black;
+-}
+-
+-.green-theme form input {
+-    outline: none;
+-    border: 3px solid black;
+-}
+-
+ 
+ /* to hide modal button */
+ .modal-close-button {
+diff --git a/client/src/utils/emailForgot.js b/client/src/utils/emailForgot.js
+new file mode 100644
+index 0000000..e69de29
+diff --git a/server/controllers/authController.js b/server/controllers/authController.js
+index 03a69c3..503f89e 100644
+--- a/server/controllers/authController.js
++++ b/server/controllers/authController.js
+@@ -4,15 +4,25 @@ import jwt from "jsonwebtoken";
+ 
+ export const handleRegister = async (req, res, next) => {
+   try {
++    console.log("Register here:", req.body);
++    let photo = "";
++    console.log("Register file:", req.file);
+     const { email, password, name, theme } = req.body;
+-    if (!email || !password || !name || !theme) {
++    if (req.file) {
++      photo = req.file.path;
++    }
++    console.log("register: photo is", photo);
++    if (!email || !password || !name || !theme || !photo) {
+       return res.status(400).json("incorrect form submission");
+     }
+     const hash = await bcrypt.hash(password, 10);
+-    const newUser = new User({ email, password: hash, name, theme });
++    const newUser = new User({ email, password: hash, name, theme, photo });
+     const data = await newUser.save();
++
++    console.log("register: data is", data);
+     res.json(data);
+   } catch (err) {
++    console.log("Register error:", err.message);
+     next(err);
+   }
+ };
+@@ -62,20 +72,16 @@ export const updateUser = async (req, res) => {
+   const { theme } = req.body;
+ 
+   try {
+-    const user = await User.findByIdAndUpdate(
+-      userId,
+-      { theme },
+-      { new: true }
+-    );
++    const user = await User.findByIdAndUpdate(userId, { theme }, { new: true });
+ 
+     if (!user) {
+-      return res.status(404).json({ error: 'User not found' });
++      return res.status(404).json({ error: "User not found" });
+     }
+ 
+     res.status(200).json(user);
+   } catch (error) {
+-    console.error('Error updating user:', error);
+-    res.status(500).json({ error: 'Internal server error' });
++    console.error("Error updating user:", error);
++    res.status(500).json({ error: "Internal server error" });
+   }
+ };
+ 
+@@ -83,7 +89,7 @@ export const getUserById = async (req, res) => {
+   const { userId } = req.params;
+ 
+   try {
+-    const user = await User.findById(userId).select('-password');
++    const user = await User.findById(userId).select("-password");
+ 
+     if (!user) {
+       return res.status(404).json({ error: "User not found" });
+@@ -96,8 +102,7 @@ export const getUserById = async (req, res) => {
+   }
+ };
+ 
+-export const getUserTheme = async (req, res) =>
+- {
++export const getUserTheme = async (req, res) => {
+   const userId = req.params.userId;
+ 
+   try {
+@@ -114,14 +119,39 @@ export const getUserTheme = async (req, res) =>
+   }
+ };
+ 
+-
+ export const getAllUsers = async (req, res) => {
+   try {
+-    const users = await User.find({}, 'name'); 
++    const users = await User.find({}, "name");
+     res.json({ success: true, users });
++  } catch (error) {
++    console.error("Error fetching users:", error);
++    res.status(500).json({ success: false, error: "Internal server error" });
++  }
++};
++export const getForgorPage = async (req, res) => {
++  try {
++    console.log("ForgorPage:", req.body);
++    const { nameOrEmail } = req.body;
++    //console.log(await User.find())
++    // const user = await User.findOne({
++    //   $or: [{ email: req.body.nameOrEmail },
++    //      { name: req.body.nameOrEmail }],
++    // });
++    const user = await User.findOne({
++     email: nameOrEmail,
++    
++    });
++    console.log("user:", user);
++
++    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
++      expiresIn: "20d",
++    
++    });
++    console.log("token:", token);
+ 
++    res.send({ success: true });
+   } catch (error) {
+-    console.error('Error fetching users:', error);
+-    res.status(500).json({ success: false, error: 'Internal server error' });
++    console.log("error in ForgorPage:", error.message);
++    res.status(500).send({ success: false, error: error.message });
+   }
+ };
+diff --git a/server/models/User.js b/server/models/User.js
+index f80786e..462ec3c 100644
+--- a/server/models/User.js
++++ b/server/models/User.js
+@@ -17,9 +17,13 @@ const userSchemas = new mongoose.Schema({
+         type: String,
+         required: true,
+     },
++    photo:{
++        type: String,
++        // required: true,
++    },
+     theme: {
+         type: String,
+-        enum: ['default', 'blossom', 'green'], // change later theme names accordingly
++        enum: ['default', 'dark', 'green'], // change later theme names accordingly
+         default: 'default',
+     },
+ });
+diff --git a/server/package-lock.json b/server/package-lock.json
+index 805597f..5aa9362 100644
+--- a/server/package-lock.json
++++ b/server/package-lock.json
+@@ -10,7 +10,7 @@
+       "license": "ISC",
+       "dependencies": {
+         "bcrypt": "^5.1.1",
+-        "cloudinary": "^1.41.3",
++        "cloudinary": "^2.0.0-rc",
+         "cors": "^2.8.5",
+         "dotenv": "^16.4.4",
+         "express": "^4.18.2",
+@@ -258,25 +258,15 @@
+       }
+     },
+     "node_modules/cloudinary": {
+-      "version": "1.41.3",
+-      "resolved": "https://registry.npmjs.org/cloudinary/-/cloudinary-1.41.3.tgz",
+-      "integrity": "sha512-4o84y+E7dbif3lMns+p3UW6w6hLHEifbX/7zBJvaih1E9QNMZITENQ14GPYJC4JmhygYXsuuBb9bRA3xWEoOfg==",
++      "version": "2.0.1",
++      "resolved": "https://registry.npmjs.org/cloudinary/-/cloudinary-2.0.1.tgz",
++      "integrity": "sha512-+j5GswtCwjAmLhjs/K26id4Zvh53zL/YWzgyenxgbdXdXmdFM8d5H1FV1sJCkpS77AqylJKBzyztySdILM+F+A==",
+       "dependencies": {
+-        "cloudinary-core": "^2.13.0",
+-        "core-js": "^3.30.1",
+         "lodash": "^4.17.21",
+         "q": "^1.5.1"
+       },
+       "engines": {
+-        "node": ">=0.6"
+-      }
+-    },
+-    "node_modules/cloudinary-core": {
+-      "version": "2.13.0",
+-      "resolved": "https://registry.npmjs.org/cloudinary-core/-/cloudinary-core-2.13.0.tgz",
+-      "integrity": "sha512-Nt0Q5I2FtenmJghtC4YZ3MZZbGg1wLm84SsxcuVwZ83OyJqG9CNIGp86CiI6iDv3QobaqBUpOT7vg+HqY5HxEA==",
+-      "peerDependencies": {
+-        "lodash": ">=4.0"
++        "node": ">=9"
+       }
+     },
+     "node_modules/color-support": {
+@@ -370,16 +360,6 @@
+       "resolved": "https://registry.npmjs.org/cookie-signature/-/cookie-signature-1.0.6.tgz",
+       "integrity": "sha512-QADzlaHc8icV8I7vbaJXJwod9HWYp8uCqf1xa4OfNu1T7JVxQIrUgOWtHdNDtPiywmFbiS12VjotIXLrKM3orQ=="
+     },
+-    "node_modules/core-js": {
+-      "version": "3.36.0",
+-      "resolved": "https://registry.npmjs.org/core-js/-/core-js-3.36.0.tgz",
+-      "integrity": "sha512-mt7+TUBbTFg5+GngsAxeKBTl5/VS0guFeJacYge9OmHb+m058UwwIm41SE9T4Den7ClatV57B6TYTuJ0CX1MAw==",
+-      "hasInstallScript": true,
+-      "funding": {
+-        "type": "opencollective",
+-        "url": "https://opencollective.com/core-js"
+-      }
+-    },
+     "node_modules/core-util-is": {
+       "version": "1.0.3",
+       "resolved": "https://registry.npmjs.org/core-util-is/-/core-util-is-1.0.3.tgz",
+diff --git a/server/package.json b/server/package.json
+index ea166d3..4d63356 100644
+--- a/server/package.json
++++ b/server/package.json
+@@ -12,7 +12,7 @@
+   "license": "ISC",
+   "dependencies": {
+     "bcrypt": "^5.1.1",
+-    "cloudinary": "^1.41.3",
++    "cloudinary": "^2.0.0-rc",
+     "cors": "^2.8.5",
+     "dotenv": "^16.4.4",
+     "express": "^4.18.2",
+diff --git a/server/routes/authRoutes.js b/server/routes/authRoutes.js
+index 8a8e4f2..9b39c0e 100644
+--- a/server/routes/authRoutes.js
++++ b/server/routes/authRoutes.js
+@@ -1,11 +1,15 @@
+ import express from "express";
+-import { getUserById, getUserTheme, handleLogin, handleRegister, updateUser,getAllUsers } from "../controllers/authController.js";
++import uploadCloud from "../middlewares/multerCloudinary.js";
++import { getUserById, getUserTheme, handleLogin, handleRegister,getForgorPage, updateUser,getAllUsers } from "../controllers/authController.js";
++
+ 
+ 
+ const router = express.Router();
+ 
+-router.post("/register", handleRegister);
++router.post("/register", uploadCloud.single("photo"),handleRegister);
++// router.post("/register", handleRegister);
+ router.post("/login", handleLogin);
++router.post("/forgotpassword",getForgorPage)
+ router.get("/all-users", getAllUsers)
+ 
+ // theme handling routes

@@ -26,16 +26,17 @@ const PlantProvider = ({ children }) => {
     useEffect(() => {
          if (!user._id) {
           return;}
-      getPlants();
+          getPlants();
           getCategories();
-          }, []);
+    }, [user]);
           
 
     const getPlants = async () => {
-      if (!user._id) {
-        return;}
+      // if (!user._id) {
+      //   return;}
+      console.log(baseUrl)
       try {
-        const response = await axios.get(`${baseUrl}/plant/`, {
+        const response = await axios.get(`${baseUrl}/plant`, {
           headers: {Authorization: localStorage.getItem("jwt_token")}
         })
         setPlants(response.data.plants);
