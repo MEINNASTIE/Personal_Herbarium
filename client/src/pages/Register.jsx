@@ -195,9 +195,9 @@ const handleSetPhotoInput = (photo) => {
           
               </span>
               <span
-                onClick={() => setTheme("dark")}
+                onClick={() => setTheme("blossom")}
                 className={`rounded-xl border-gray-300 bg-gray-700 p-2 cursor-pointer text-white ${
-                  theme === "dark" ? "bg-gray-600 text-white" : ""
+                  theme === "blossom" ? "bg-gray-600 text-white" : ""
                 }`}
               >
                
