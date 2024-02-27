@@ -85,7 +85,7 @@ export default function UserProvider({ children }) {
     localStorage.removeItem('user'); 
     setIsLoggedIn(false);
     setUser({ email: "", _id: "", theme: "" });
-    navigate('/');
+    navigate('/login');
   };
 
   return (

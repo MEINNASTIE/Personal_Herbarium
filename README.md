@@ -6,8 +6,8 @@ A small personal customizable Herbarium (specimen collection)
 
 ## tasks:
 
-Jamilya - Users page  style/ User upload image / Forget pass page
+Jamilya - UsersPage style addon / Forget page small fixes
 
-Issa - UserPlantsPage style / Add Plant style
+Issa - Blossom theme / Add to my collection button 
 
-Tyhe - PlantOnDisplay style / Theme +
+Tyhe - Print plant / Display user picture 

@@ -1,3 +1,7 @@
+import React from 'react';
+import { useReactToPrint } from 'react-to-print';
+import PrintableComponent from './PrintablePlant.jsx';
+
 import { useContext, useEffect, useState } from 'react'
 import { PlantContext } from '../../context/plantProvider'
 import { useParams } from 'react-router-dom';
@@ -6,12 +10,19 @@ import axios from 'axios';
 import { UserContext } from '../../context/userProvider';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleMinus, faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faCircleMinus, faPencil, faPrint } from "@fortawesome/free-solid-svg-icons";
 import Navbar from '../sticky/Navbar';
 import Footer from '../sticky/Footer';
 
 function PlantItem({ plant }) {
     const { plantId } = useParams();
+
+    const componentRef = React.useRef();
+
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+      });
+    
 
     console.log('Plant ID:', plantId);
     const [loadedPlant, setLoadedPlant] = useState();
@@ -82,12 +93,12 @@ function PlantItem({ plant }) {
     };
 
     return (
-        <div className={`${className} flex flex-col h-screen lg:mx-[150px] justify-center`}>
-            <Navbar />
-            <div className={`${className} limes-main flex-grow`}>
+        <div className={`${className} lg:mx-[150px] justify-center`}>
+            <Navbar className="sticky top-0 z-50"/>
+            <div className={`${className} limes-main flex-grow h-[790px] pt-[20px]`}>
             {editMode ? (
                 <>
-                <div className={`${className} limes flex flex-col items-center mt-[140px] gap-6 border border-1 mr-40 ml-40 rounded-lg shadow-md bg-transparent pt-4 pb-4`}>
+                <div className={`${className} limes flex flex-col items-center  gap-6 border border-1 mr-40 ml-40 rounded-lg shadow-md bg-transparent pt-4 pb-4`}>
                 <p className="text-white">Got a typo? Or simply wish to add something?</p>
                         <input 
                             type="text" 
@@ -162,9 +173,20 @@ function PlantItem({ plant }) {
                                 <p><span className="font-bold text-[20px]">Category:</span> {loadedPlant.categorie}</p>
                                 <p><span className="font-bold text-[20px]">Latin Name:</span> {loadedPlant.latinName}</p>
                                 <p><span className="font-bold text-[20px]">Description:</span> {loadedPlant.description}</p>
-                                <div className="mt-40 text-right mr-3">
-                                    <button onClick={onDeleteClick} className={`${className} quinque mt-4  hover:text-[#BCC490] secondary-text font-bold py-2 px-4 rounded mr-4 text-[30px]`}><FontAwesomeIcon icon={faCircleMinus}></FontAwesomeIcon></button>
-                                    <button onClick={onEditeClick} className={`${className} quinque mt-4  hover:text-[#BCC490] secondary-text font-bold py-2 px-4 rounded mr-4 text-[30px]`}><FontAwesomeIcon icon={faPencil} /></button>
+                                <div className="float-right mr-2">
+                                    <button onClick={onDeleteClick} className={`${className} quinque mt-4  hover:text-[#BCC490] secondary-text font-bold py-2 px-4 rounded mr-4 text-[30px]`}>
+                                        <FontAwesomeIcon icon={faCircleMinus}></FontAwesomeIcon>
+                                    </button>
+                                    <button onClick={onEditeClick} className={`${className} quinque mt-4  hover:text-[#BCC490] secondary-text font-bold py-2 px-4 rounded mr-4 text-[30px]`}>
+                                        <FontAwesomeIcon icon={faPencil} />
+                                    </button>
+
+                                    <button onClick={handlePrint} className={`${className} quinque mt-4  hover:text-[#BCC490] secondary-text font-bold py-2 px-4 rounded mr-4 text-[30px]`}>
+                                         <FontAwesomeIcon icon={faPrint} />
+                                    </button>
+                                    <div className="no-print hidden">
+                                        <PrintableComponent ref={componentRef} plant={loadedPlant}/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -174,7 +196,7 @@ function PlantItem({ plant }) {
                 </>
             )}
             </div>
-            <Footer />
+            <Footer className="py-4 lg:py-6 fixed bottom-0 w-full bg-white z-50" />
         </div>
     );
 }

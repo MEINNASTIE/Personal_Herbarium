@@ -88,9 +88,9 @@ export default function Homepage() {
   // 
 
   return (
-    <div className={`${className} flex flex-col h-screen justify-center text-center lg:mx-[150px]`}>
+    <div className={`${className} text-center lg:mx-[150px] relative`}>
       {alienImg}
-      <Navbar />
+      <Navbar className="sticky top-0 z-50"/>
       <div className={`${className} limes-main flex-grow pb-10`}>
         <div>
           <Sidebar /> 
@@ -121,7 +121,7 @@ export default function Homepage() {
           <PlantList />
         </div>
       </div>
-      <Footer className="py-4 lg:py-6"/>
+      <Footer className="py-4 lg:py-6 fixed bottom-0 w-full bg-white z-50"/>
     </div>
   );
 }
