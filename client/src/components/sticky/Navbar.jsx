@@ -42,7 +42,7 @@ export default function Navbar() {
               <img src={LOGO} alt="logo" className="w-[40px] cursor-pointer"></img> 
             </div>
             <div>
-            <a href="#" className="block mt-4 text-white lg:inline-block lg:mt-0 hover:text-white mr-4">Profile</a>
+            <Link to="/profilePage" className="block mt-4 text-white lg:inline-block lg:mt-0 hover:text-white mr-4">Profile</Link>
             <Link to="/herbarium" className="block mt-4 text-white lg:inline-block lg:mt-0 hover:text-white mr-4">Herbarium +</Link>
             </div>
           </div>

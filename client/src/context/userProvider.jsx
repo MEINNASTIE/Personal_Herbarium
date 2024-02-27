@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import axios from 'axios'; 
 import { useNavigate } from 'react-router-dom';
-import { baseUrl } from "../utils/api.js"
+import { baseUrl } from "../utils/api.js";
 
 export const UserContext = createContext();
 
@@ -88,9 +88,38 @@ export default function UserProvider({ children }) {
     navigate('/login');
   };
 
+  const updateName = async (userId, newName) => {
+    try {
+      const response = await axios.post(`${baseUrl}/auth/${userId}/update-name`, { name: newName });
+      setUser(prevUser => ({ ...prevUser, name: newName }));
+      localStorage.setItem('user', JSON.stringify({ ...user, name: newName }));
+      return response.data;
+    } catch (error) {
+      console.error('Error updating name:', error);
+    }
+  };
+
+  const updateProfileImage = async (userId, selectedFile) => {
+    try {
+      const formData = new FormData();
+      formData.append('profile-image', selectedFile);
+      const response = await axios.post(`${baseUrl}/auth/${userId}/update-profile-image`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      setUser(prevUser => ({ ...prevUser, photo: response.data.photo }));
+      localStorage.setItem('user', JSON.stringify({ ...user, photo: response.data.photo }));
+      return response.data;
+    } catch (error) {
+      console.error('Error updating profile image:', error);
+    }
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser, login, logout, isLoggedIn }}>
+    <UserContext.Provider value={{ user, setUser, login, logout, isLoggedIn, updateName, updateProfileImage }}>
       {children}
     </UserContext.Provider>
   );
 }
+
