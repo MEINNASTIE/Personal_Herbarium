@@ -21,7 +21,7 @@ export default function HamburgerMenu() {
 
   return (
     <div className="md:hidden z-80">
-      <button onClick={toggleMenu} className={`${className} limes secondary flex items-center px-3 py-2 border rounded text-white border-white justify-center`}>
+      <button onClick={toggleMenu} className={`${className} limes secondary ater flex items-center px-3 py-2 border rounded text-white border-white justify-center`}>
         <FontAwesomeIcon icon={isOpen ? faTimes : faBars} />
       </button>
       {isOpen && (
