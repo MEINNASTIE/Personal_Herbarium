@@ -1,13 +1,23 @@
-import  { useEffect, useState } from 'react';
+import  { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { baseUrl } from '../utils/api.js';
 import Navbar from '../components/sticky/Navbar.jsx';
 import Footer from '../components/sticky/Footer.jsx';
+import { UserContext } from '../context/userProvider.jsx';
+
+
+
+
+
 
 const UserPlantsPage = () => {
     const { userId } = useParams();
     const [plants, setPlants] = useState([]);
+
+    const { user } = useContext(UserContext);
+    const { theme } = user || {};
+    const className = theme ? `${theme}-theme` : '';
 
     useEffect(() => {
         const fetchPlants = async () => {
@@ -23,10 +33,10 @@ const UserPlantsPage = () => {
     }, [userId]);
     return (
         <> 
-        <div className="lg:mx-[150px] flex flex-col min-h-screen">
-            <div className="flex-grow">
+        <div className={`${className}  lg:mx-[150px] flex flex-col min-h-screen`}>
+            <div className={`${className} flex-grow`}>
             <Navbar/>
-            <div>
+            <div >
                 <h1>Plants Created by User</h1>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
                     {plants.map(plant => (

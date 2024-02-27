@@ -16,10 +16,16 @@
 
 }
 .blossom-theme .tertiary {
-    background-color: #FFFFFF;
+    background-color: rgba(240, 189, 189, 0.9);
     color: #000000;
 
 }
+.blossom-theme .quarto {
+    background-color: rgba(240, 0, 189, 0.2);
+        color: #000000;
+
+}
+
 /* Green theme */
   
 .green-theme {

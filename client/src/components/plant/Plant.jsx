@@ -168,7 +168,7 @@ function PlantItem({ plant }) {
                                 <h3 className={`${className} limes secondary-text text-[30px] font-bold absolute top-[84%] left-[4.5%] bg-opacity-50 bg-white p-2 pr-4 pl-4 rounded-lg`}>{loadedPlant.name}</h3>
                                 </div>
 
-                                <div className={`${className} quinque limes secondary-text bg-gray-400 w-[580px] h-[450px] pt-20  rounded-tr-lg rounded-br-lg pl-10`}>
+                                <div className={`${className} quinque quarto limes secondary-text bg-gray-400 w-[580px] h-[450px] pt-20  rounded-tr-lg rounded-br-lg pl-10`}>
                                 <p><span className="font-bold text-[20px]">Type:</span> {loadedPlant.type}</p>
                                 <p><span className="font-bold text-[20px]">Category:</span> {loadedPlant.categorie}</p>
                                 <p><span className="font-bold text-[20px]">Latin Name:</span> {loadedPlant.latinName}</p>
