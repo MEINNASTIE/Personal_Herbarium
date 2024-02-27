@@ -2,6 +2,7 @@ import { useContext, useState } from 'react';
 import axios from 'axios';
 import { baseUrl } from '../../utils/api';
 import { UserContext } from '../../context/userProvider';
+import { Link } from 'react-router-dom';
 
 const PlantSearch = () => {
   const [query, setQuery] = useState('');
@@ -45,11 +46,15 @@ const PlantSearch = () => {
       <div>
         <ul className="flex flex-col text-left">
           {plants.map((plant) => (
+            <>
             <li key={plant._id} className="ml-4">
-              <h3 className="text-lg font-bold mt-2">{plant.name}</h3>
-              <p>Latin Name: {plant.latinName}</p>
-              {plant.userId && <p>Created by: {plant.userId.name}</p>}
+                <Link to={`/plant/${plant._id}`}>
+                    <h3 className="text-lg font-bold mt-2">{plant.name}</h3>
+                    <p>Latin Name: {plant.latinName}</p>
+                    {plant.userId && <p>Created by: {plant.userId.name}</p>}
+                </Link>
             </li>
+            </>
           ))}
         </ul>
       </div>
