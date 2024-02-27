@@ -159,7 +159,7 @@ function PlantItem({ plant }) {
                 <>
                     {loadedPlant && (
                         <>  
-                        <div className={`${className} limes pb-10 mr-[150px] ml-[150px] mt-[100px] rounded-lg border border-1 shadow-md bg-transparent`}>
+                        <div key={loadedPlant._id} className={`${className} limes pb-10 mr-[150px] ml-[150px] mt-[100px] rounded-lg border border-1 shadow-md bg-transparent`}>
                         <div className="flex justify-center items-center pt-10 relative">
                                 <div className="flex flex-col">
                                 {loadedPlant.image && (
