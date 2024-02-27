@@ -6,6 +6,7 @@ Feel free to discuss and share any ideas you might have
 #### These are the dependencies and libraries you are supposed to have in your package.json after installing: npm i 
 - axios
 - react-router-dom
+- react-to-print
   
 Other libraries can be added upon a joint confirmation 
 

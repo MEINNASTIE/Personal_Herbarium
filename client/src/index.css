@@ -18,3 +18,38 @@
 .email {
   text-indent: 1.2rem;
 }
+
+
+/* FOR PRINT COMPONENT */
+
+@media print {
+  .no-print {
+    display: none;
+  }
+}
+.printable-content {
+  background-color: white;
+}
+@media print {
+  .printable-content {
+    margin: 100px;
+    border: 1px solid black;
+    padding: 60px;
+  }
+  .printable-content span {
+    font-weight: bold;
+  }
+  .printable-content p {
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  .printable-content img {
+    height: 400px;
+    object-fit: cover;
+    border: 2px solid black;
+  }
+  .printable-content hr {
+    border: 1px dashed #8c8b8b;
+    margin-top: 10px;
+  }
+}

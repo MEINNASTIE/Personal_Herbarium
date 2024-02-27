@@ -21,7 +21,7 @@ export default function Navbar() {
         <div className="flex items-center">
             {isLoggedIn ? (
               <>
-              <FontAwesomeIcon icon={faUser} className="text-white" />
+                <img src={user.photo} alt="User Photo" className="w-[30px] h-[30px] rounded-full object-cover"/>
                 <span className="text-white ml-2">{user ? user.name : 'User'}</span>
                 <button onClick={logout} className="text-white ml-4">Logout</button>
             </>        

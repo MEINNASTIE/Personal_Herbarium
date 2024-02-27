@@ -34,7 +34,7 @@ export default function HamburgerMenu() {
             <img src={LOGO} alt="logo" className="w-[40px] cursor-pointer block" />
           </Link>
           <a href="#" className="block mt-4 text-white">Profile</a>
-          <a href="#" className="block mt-4 text-white">Herbarium +</a>
+          <Link to="/herbarium" className="block mt-4 text-white lg:inline-block lg:mt-0 hover:text-white mr-4">Herbarium +</Link>
           </div>
         </div>
       )}
