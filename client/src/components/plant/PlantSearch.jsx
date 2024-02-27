@@ -48,7 +48,7 @@ const PlantSearch = () => {
             <li key={plant._id} className="ml-4">
               <h3 className="text-lg font-bold mt-2">{plant.name}</h3>
               <p>Latin Name: {plant.latinName}</p>
-              <p>Created by: {plant.userId.name}</p>
+              {plant.userId && <p>Created by: {plant.userId.name}</p>}
             </li>
           ))}
         </ul>

@@ -69,7 +69,7 @@ export const SearchPlants = async (req, res) => {
         const { query } = req.query;
         let plants;
         if (query) {
-            plants = await Plant.find({ name: { $regex: query, $options: 'i' } }).populate('userId', 'name');
+            plants = await Plant.find({ name: { $regex: `.*${query}.*`, $options: 'i' } }).populate('userId', 'name');
         } else {
             plants = await Plant.find().populate('userId', 'name');
         }
