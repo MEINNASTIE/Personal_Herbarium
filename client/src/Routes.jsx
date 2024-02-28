@@ -8,6 +8,7 @@ import PlantItem from "./components/plant/Plant.jsx";
 import UsersPage from "./pages/UsersPage.jsx";
 import UserPlantsPage from "./pages/UserPlantsPage.jsx";
 import ForgorPage from "./pages/ForgorPage.jsx";
+import ChangePassword from "./pages/ChangePassword.jsx";
 
 export default function Routing() {
 
@@ -19,6 +20,7 @@ export default function Routing() {
       <Route path="/login" element={<Login/>} />
       <Route path="/register" element={<Register/>} />
       <Route path="/forgotpassword" element={<ForgorPage/>} />
+      <Route path="/changePassword/:token" element={<ChangePassword/>} />
       <Route path="/plant/:plantId" element={<PlantItem />} />
       <Route path="/herbarium" element={<UsersPage/>} />
       <Route path="/plants/user/:userId" element={<UserPlantsPage/>} />

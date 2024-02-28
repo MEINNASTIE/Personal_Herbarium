@@ -1,13 +1,13 @@
 import { useState } from "react";
 import COVER_LOGO from "../assets/test.png";
-import COVER_VIDIO from "../assets/green.mp4";
-// import { useNavigate } from "react-router-dom";
+import COVER_VIDIOS from "../assets/flower2.mp4";
+import { useNavigate } from "react-router-dom";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { baseUrl } from "../utils/api.js";
 
 const ForgorPage = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [nameOrEmail, setNameEmail] = useState("");
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
@@ -21,7 +21,7 @@ const ForgorPage = () => {
     if (response.data.success) {
       alert("Please check your email to reset your password");
     }
-    // navigate("/login");
+    navigate("/");
   };
 
   return (
@@ -41,7 +41,7 @@ const ForgorPage = () => {
           loop
           muted
         >
-          <source src={COVER_VIDIO} type="video/mp4" />
+          <source src={COVER_VIDIOS} type="video/mp4" />
         </video>
       </div>
 
@@ -55,16 +55,16 @@ const ForgorPage = () => {
         <form className="mt-8 space-y-8  w-4/5 pl-20 " onSubmit={handleSubmit}>
           <div>
             <label htmlFor="name" className="sr-only ">
-              Full Name
+              Enter Your Email
             </label>
             <input
               id="name"
               name="name"
-              type="text"
+              type="email"
               autoComplete="name"
               required
               className="appearance-none rounded-xl min-h-12 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
-              placeholder="Full Name"
+              placeholder="Enter Your Email"
               value={nameOrEmail}
               onChange={(e) => setNameEmail(e.target.value)}
             />

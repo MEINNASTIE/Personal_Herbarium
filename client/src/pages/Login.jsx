@@ -129,7 +129,10 @@ export default function Login() {
           </button>
         </div>
 
-                <div>Forgot your password? </div>
+                <div>Forgot your password? 
+                  <Link to={"/forgotpassword"}>
+                    <span className="text-blue-500">Click here</span>
+                  </Link> </div>
       </form>
     </div>
     </div>
