@@ -14,46 +14,46 @@ export default function AddPlant() {
     <div className={`${className} flex flex-col h-screen justify-center text-center lg:mx-[150px]`}>
        <Navbar />
         <div className={`${className} limes-main flex-grow flex justify-center items-center h-screen`}>
-        <div className={`${className}`}>
+        <div className={`${className} limes rounded-lg`}>
                 <form onSubmit={createPlantHandler} className={`${className} w-full max-w-lg p-8 shadow-lg rounded-lg bg-white border border-gray-200`}>
                 <input
                     type="text"
                    name="name"
                     placeholder="Plant name"
                     required
-                   className="w-full p-2 mb-4 border-2 border-green-500 rounded"
+                   className="w-full p-2 mb-4 border-2 border-green-500 rounded focus:outline-none"
                 />
                 <input
                     type="text"
                     name="type"
                     placeholder="Plant type"
-                   className="w-full p-2 mb-4 border-2 border-green-500 rounded"
+                   className="w-full p-2 mb-4 border-2 border-green-500 rounded focus:outline-none"
                 />
                 <input
                     type="text"
                    name="categorie"
                     placeholder="Category"
-                    className="w-full p-2 mb-4 border-2 border-green-500 rounded"
+                    className="w-full p-2 mb-4 border-2 border-green-500 rounded focus:outline-none"
                 />
                <input
                     type="text"
                    name="latinName"
                    placeholder="Latin name"
                    required
-                   className="w-full p-2 mb-4 border-2 border-green-500 rounded"
+                   className="w-full p-2 mb-4 border-2 border-green-500 rounded focus:outline-none"
                />
                 <input
                     type="text"
                    name="description"
                    placeholder="Description"
-                    className="w-full p-2 mb-4 border-2 border-green-500 rounded"
+                    className="w-full p-2 mb-4 border-2 border-green-500 rounded focus:outline-none"
                 />
                 <input
                     type="file"
                     name="plant-image"
-                   className="w-full p-2 mb-4 border-2 border-green-500 rounded file:border-none file:bg-green-200 file:text-green-700"
+                   className="w-full p-2 mb-4 border-2 border-green-500 rounded file:border-none file:bg-green-200 file:text-green-700 focus:outline-none"
                />
-                <button type='submit' className="w-full bg-green-600 hover:bg-green-700 text-white p-2 rounded transition-colors duration-200">Add Plant</button> 
+                <button type='submit' className={`${className} limes w-full bg-green-600 hover:bg-green-700 text-white p-2 rounded transition-colors duration-200`}>Add Plant</button> 
                 </form>
             </div>
             </div>  

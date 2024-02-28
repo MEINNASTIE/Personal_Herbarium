@@ -44,7 +44,7 @@ const PlantSearch = () => {
       <button onClick={handleSearch} className="m-2 pt-2">Search</button>
       
       <div>
-        <ul className="flex flex-col text-left">
+        <ul className="flex flex-col text-left max-h-80 overflow-y-auto">
           {plants.map((plant) => (
             <>
             <li key={plant._id} className="ml-4">

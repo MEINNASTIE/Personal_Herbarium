@@ -119,6 +119,55 @@ export const getUserTheme = async (req, res) => {
   }
 };
 
+// handling user profile page 
+
+// Add an endpoint for updating user's name
+export const updateUserName = async (req, res) => {
+  const { userId } = req.params;
+  const { name } = req.body;
+
+  try {
+    const user = await User.findByIdAndUpdate(userId, { name }, { new: true });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("Error updating user name:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+// Add an endpoint for updating user's profile image
+export const updateUserProfileImage = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    let photo;
+
+    if (req.file) {
+      photo = req.file.path;
+    } else {
+      photo = req.body.photo;
+    }
+
+    const user = await User.findByIdAndUpdate(userId, { photo }, { new: true });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("Error updating user profile image:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+////////////////////////////////////////////////
+
 export const getAllUsers = async (req, res) => {
   try {
     const users = await User.find({}, "name");
