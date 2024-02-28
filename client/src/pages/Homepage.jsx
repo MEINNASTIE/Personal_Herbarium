@@ -12,6 +12,7 @@ import { faLeaf, faSearch } from "@fortawesome/free-solid-svg-icons";
 import Navbar from "../components/sticky/Navbar.jsx";
 import Footer from "../components/sticky/Footer.jsx";
 
+
 export default function Homepage() {
   // For import on other pages use this code below
   const { user } = useContext(UserContext);
@@ -75,10 +76,15 @@ export default function Homepage() {
 
   let searchIcon;
   let paragraph;
-
+  let backgroundImageLink
+  // let bcColor 
+  let backgroundSize
   if (theme === 'blossom') {
   searchIcon = <FontAwesomeIcon icon={faSearch} />;
   paragraph = <p>And I can buy myself flowers</p>
+  backgroundImageLink = "/cherry-blossom.png"
+  // bcColor =  "#f08080"
+  backgroundSize=  'contain'
 
   } else {
   searchIcon = <img src={imgUrl} alt="Search Icon" />;
@@ -86,9 +92,13 @@ export default function Homepage() {
 
   const alienImg = theme ? <img src={backgroundImageUrl} className="absolute right-40 top-80 transform rotate-6"></img> : null;
   // 
-
+ 
+  
   return (
-    <div className={`${className} text-center lg:mx-[150px] relative`}>
+
+    <div className={`${className}  relative text-center lg:mx-[150px] `}  style={{ backgroundImage: `url(${backgroundImageLink})`, backgroundRepeat: 'no-repeat', backgroundPosition: 'bottom right ', backgroundSize:`${backgroundSize}`}} >
+
+    {/* <div className={`${className} text-center lg:mx-[150px] relative`}> */}
       {alienImg}
       <Navbar className="sticky top-0 z-50"/>
       <div className={`${className} limes-main flex-grow pb-10`}>
@@ -125,4 +135,3 @@ export default function Homepage() {
     </div>
   );
 }
-

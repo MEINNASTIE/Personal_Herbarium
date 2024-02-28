@@ -185,7 +185,7 @@ function PlantItem({ plant }) {
                                             <div className="no-print hidden">
                                                 <PrintableComponent ref={componentRef} plant={loadedPlant}/>
                                             </div>
-                                        </div>
+                                       </div>
                                     </div>
                                 </div>
                             </div>

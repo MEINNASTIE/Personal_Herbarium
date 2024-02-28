@@ -41,7 +41,7 @@ const PlantSearch = () => {
         placeholder="Search Plants..."
         className="p-2 focus:outline-none outline-none" 
       />
-      <button onClick={handleSearch} className="pt-2">Search</button>
+      <button onClick={handleSearch} className="m-2 pt-2">Search</button>
       
       <div>
         <ul className="flex flex-col text-left max-h-80 overflow-y-auto">
