@@ -34,7 +34,7 @@ const UserPlantsPage = () => {
             <div className={`${className} limes-main flex-grow`}>
             <h1 className="text-center mt-10 mb-5">Plants Created by User</h1>
             <div className={`flex justify-center items-center`}>
-                
+      
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
                     {plants.map(plant => (
                         <div key={plant._id} className={`${className} limes border-1 border rounded-lg shadow-md p-[20px] w-[200px]`}>
