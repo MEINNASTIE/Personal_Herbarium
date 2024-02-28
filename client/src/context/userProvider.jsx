@@ -1,7 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import axios from 'axios'; 
 import { useNavigate } from 'react-router-dom';
-import { baseUrl } from "../utils/api.js";
 
 export const UserContext = createContext();
 
@@ -13,6 +12,8 @@ export default function UserProvider({ children }) {
     _id: "",
     theme: "",
   });
+
+  const baseUrl = import.meta.env.VITE_BASE_URL;
 
   useEffect(() => {
     const storedToken = localStorage.getItem("jwt_token");
