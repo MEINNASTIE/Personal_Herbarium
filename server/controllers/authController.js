@@ -122,7 +122,7 @@ export const getUserTheme = async (req, res) => {
 
 export const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find({}, "name");
+    const users = await User.find();
     res.json({ success: true, users });
   } catch (error) {
     console.error("Error fetching users:", error);
