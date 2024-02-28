@@ -5,7 +5,6 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faShield } from "@fortawesome/free-solid-svg-icons";
-import { baseUrl } from "../utils/api.js"
 import { UserContext } from "../context/userProvider.jsx"
 
 export default function Login() {
@@ -14,6 +13,8 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  const baseUrl = import.meta.env.VITE_BASE_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

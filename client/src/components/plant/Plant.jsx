@@ -5,7 +5,6 @@ import PrintableComponent from './PrintablePlant.jsx';
 import { useContext, useEffect, useState } from 'react'
 import { PlantContext } from '../../context/plantProvider'
 import { useParams } from 'react-router-dom';
-import { baseUrl } from '../../utils/api';
 import axios from 'axios';
 import { UserContext } from '../../context/userProvider';
 
@@ -23,6 +22,7 @@ function PlantItem({ plant }) {
         content: () => componentRef.current,
       });
     
+    const baseUrl = import.meta.env.VITE_BASE_URL;
 
     console.log('Plant ID:', plantId);
     const [loadedPlant, setLoadedPlant] = useState();

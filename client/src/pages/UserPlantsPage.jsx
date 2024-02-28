@@ -1,7 +1,6 @@
 import  { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { baseUrl } from '../utils/api.js';
 import Navbar from '../components/sticky/Navbar.jsx';
 import Footer from '../components/sticky/Footer.jsx';
 import { UserContext } from '../context/userProvider.jsx';
@@ -13,6 +12,8 @@ const UserPlantsPage = () => {
     const { user } = useContext(UserContext);
     const { theme } = user || {};
     const className = theme ? `${theme}-theme` : '';
+
+    const baseUrl = import.meta.env.VITE_BASE_URL;
 
     useEffect(() => {
         const fetchPlants = async () => {

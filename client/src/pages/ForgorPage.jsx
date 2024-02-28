@@ -4,11 +4,12 @@ import COVER_VIDIO from "../assets/green.mp4";
 // import { useNavigate } from "react-router-dom";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import { baseUrl } from "../utils/api.js";
 
 const ForgorPage = () => {
   // const navigate = useNavigate();
   const [nameOrEmail, setNameEmail] = useState("");
+
+  const baseUrl = import.meta.env.VITE_BASE_URL;
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
   const handleSubmit = async (e) => {

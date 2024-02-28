@@ -1,12 +1,13 @@
 import { useContext, useState } from 'react';
 import axios from 'axios';
-import { baseUrl } from '../../utils/api';
 import { UserContext } from '../../context/userProvider';
 import { Link } from 'react-router-dom';
 
 const PlantSearch = () => {
   const [query, setQuery] = useState('');
   const [plants, setPlants] = useState([]);
+
+  const baseUrl = import.meta.env.VITE_BASE_URL;
 
   const { user } = useContext(UserContext);
   const { theme } = user;

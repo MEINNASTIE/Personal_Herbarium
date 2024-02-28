@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
-import { baseUrl } from "../utils/api.js"
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "./userProvider.jsx";
 
@@ -15,6 +14,8 @@ const PlantProvider = ({ children }) => {
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
     const [categories, setCategories] = useState();
+
+    const baseUrl = import.meta.env.VITE_BASE_URL;
 
     useEffect(() => {
       if (user) {

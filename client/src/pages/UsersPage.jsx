@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import { baseUrl } from "..//utils/api.js";
 import { Link } from 'react-router-dom';
 import Navbar from '../components/sticky/Navbar.jsx';
 import Footer from '../components/sticky/Footer.jsx';
@@ -12,6 +11,8 @@ const UsersPage = () => {
     const { user } = useContext(UserContext);
     const { theme } = user;
     const className = `${theme}-theme`;
+
+    const baseUrl = import.meta.env.VITE_BASE_URL;
 
   useEffect(() => {
     const fetchUsers = async () => {

@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { baseUrl } from "../utils/api.js";
 // import { faEnvelope, faShield } from "@fortawesome/free-solid-svg-icons";
  import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import COVER_LOGO from "../assets/test.png";
@@ -17,6 +16,8 @@ export const Register = () => {
   const [theme, setTheme] = useState("light");
 
   const photoDivRef = useRef(null);
+
+  const baseUrl = import.meta.env.VITE_BASE_URL;
 
 
   const navigate = useNavigate();
