@@ -21,15 +21,19 @@ export default function Navbar() {
         <div className="flex items-center">
             {isLoggedIn ? (
               <>
+              <Link to="/" className="flex items-center">
                 <img src={user.photo} alt="User Photo" className="w-[30px] h-[30px] rounded-full object-cover"/>
                 <span className="text-white ml-2">{user ? user.name : 'User'}</span>
+              </Link>
                 <button onClick={logout} className="text-white ml-4">Logout</button>
             </>        
               ) : (
             <>
-            <FontAwesomeIcon icon={faUser} className="text-white" />
-            <span className="text-white ml-2">User Name</span>
-            <Link to="/login" className="text-white ml-4">Login</Link>
+             <Link to="/" className="flex items-center">
+               <FontAwesomeIcon icon={faUser} className="text-white" />
+               <span className="text-white ml-2">User Name</span>
+             </Link>
+             <Link to="/login" className="text-white ml-4">Login</Link>
           </>
         )}
         </div>
