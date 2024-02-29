@@ -19,7 +19,7 @@ export default async function sendEmailForgotPass(token, email) {
   console.log("utils:", process.env)
   // send mail with defined transport object
   const info = await transporter.sendMail({
-    from: '"Fred Foo 👻" <tyhe444@gmail.com>', // sender address
+    from: '"Fred Foo 👻" <baggyhally@gmail.com>', // sender address
     to: email, // list of receivers
     subject: "Instruvtions to change your password om=n social app ✔", // Subject line
     text: "Instruvtions to change your password om=n social app", // plain text body
