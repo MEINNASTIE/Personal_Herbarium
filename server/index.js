@@ -7,17 +7,12 @@ import authRoutes from './routes/authRoutes.js';
 import plantRoutes from "./routes/plantRoutes.js";
 import errorMiddleware from './middlewares/errorMiddleware.js';
 
-
 const app = express();
 app.use(express.json());
 app.use(cors())
 connectDB();
 
 // app.use(cors({ origin: "http://localhost:5173" }));
-
-app.get('/', (req, res) => {    
-    res.send('Hello World');
-    }); 
 
 app.use("/plant",plantRoutes)
 app.use("/auth",authRoutes);

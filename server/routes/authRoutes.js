@@ -1,6 +1,6 @@
 import express from "express";
 import uploadCloud from "../middlewares/multerCloudinary.js";
-import { getUserById, getUserTheme, handleLogin, handleRegister,getForgorPage, updateUser,getAllUsers, updateUserName, updateUserProfileImage } from "../controllers/authController.js";
+import { getUserById, getUserTheme, handleLogin, handleRegister,getForgorPage, updateUser,getAllUsers, updateUserName, updateUserProfileImage, getChangePassword } from "../controllers/authController.js";
 
 
 
@@ -10,6 +10,7 @@ router.post("/register", uploadCloud.single("photo"),handleRegister);
 // router.post("/register", handleRegister);
 router.post("/login", handleLogin);
 router.post("/forgotpassword",getForgorPage)
+router.patch("/changePassword", getChangePassword);
 router.get("/all-users", getAllUsers)
 
 // theme handling routes
