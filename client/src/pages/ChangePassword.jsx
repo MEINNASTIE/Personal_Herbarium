@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import COVER_LOGO from "../assets/test.png";
-import COVER_VIDIO from "../assets/flower2.mp4";
+import COVER_VIDIO from "../assets/change.mp4";
 import { baseUrl, } from "../utils/api.js";
 
 
