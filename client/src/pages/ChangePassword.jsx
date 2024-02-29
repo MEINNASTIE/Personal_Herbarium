@@ -3,12 +3,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import COVER_LOGO from "../assets/test.png";
 import COVER_VIDIO from "../assets/change.mp4";
-import { baseUrl, } from "../utils/api.js";
-
 
 export default function Register() {
   const { token } = useParams();
   const [password, setPassword] = useState("");
+
+  const baseUrl = import.meta.env.VITE_BASE_URL;
  
   const navigate = useNavigate();
 

@@ -22,7 +22,7 @@ const ForgorPage = () => {
     if (response.data.success) {
       alert("Please check your email to reset your password");
     }
-    navigate("/");
+    navigate("/login");
   };
 
   return (
