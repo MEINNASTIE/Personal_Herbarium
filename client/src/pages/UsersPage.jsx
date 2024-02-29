@@ -32,7 +32,7 @@ const UsersPage = () => {
   return (
     <div className={`${className} lg:mx-[150px] flex flex-col min-h-screen`}>
       <Navbar />
-      <div className={`${className} limes-main flex-grow`}>
+      <div className={`${className} ater limes-main flex-grow`}>
         <div className="d-flex justify-center align-middle">
           <div className="d-flex grid  grid-cols-5 gap-4 m-10">
             {users.map((user) => (
