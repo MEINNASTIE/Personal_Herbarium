@@ -6,7 +6,7 @@ import { client_app_url } from "../lib/env-vars.js";
 
 export default async function sendEmailForgotPass(token, email) {
   console.log("🚀 ~ token:", token);
-  console.log("🚀 ~ process.env.SMTP_SERVER:", process.env.SMTP_SERVER);
+  console.log("🚀 ~ process.env:", process.env);
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_SERVER,
     port: process.env.SMTP_PORT,
@@ -16,10 +16,10 @@ export default async function sendEmailForgotPass(token, email) {
       pass: process.env.SMTP_PASS,
     },
   });
-
+  console.log("utils:", process.env)
   // send mail with defined transport object
   const info = await transporter.sendMail({
-    from: '"Fred Foo 👻" <baggyhally@gmail.com>', // sender address
+    from: '"Fred Foo 👻" <tyhe444@gmail.com>', // sender address
     to: email, // list of receivers
     subject: "Instruvtions to change your password om=n social app ✔", // Subject line
     text: "Instruvtions to change your password om=n social app", // plain text body
