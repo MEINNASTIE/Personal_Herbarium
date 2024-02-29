@@ -1,6 +1,6 @@
 import { useState } from "react";
 import COVER_LOGO from "../assets/test.png";
-import COVER_VIDIOS from "../assets/flower2.mp4";
+import COVER_VIDIOS from "../assets/forgot.mp4";
 import { useNavigate } from "react-router-dom";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
