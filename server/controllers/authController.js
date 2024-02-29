@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import sendEmailForgotPass from "../utils/emailForgot.js";
 
 export const handleRegister = async (req, res, next) => {
   try {
@@ -170,7 +171,7 @@ export const updateUserProfileImage = async (req, res) => {
 
 export const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find({}, "name");
+    const users = await User.find();
     res.json({ success: true, users });
   } catch (error) {
     console.error("Error fetching users:", error);
@@ -187,20 +188,45 @@ export const getForgorPage = async (req, res) => {
     //      { name: req.body.nameOrEmail }],
     // });
     const user = await User.findOne({
-     email: nameOrEmail,
-    
+      email: nameOrEmail,
     });
     console.log("user:", user);
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "20d",
-    
     });
+    sendEmailForgotPass(token, user.email);
     console.log("token:", token);
 
     res.send({ success: true });
   } catch (error) {
     console.log("error in ForgorPage:", error.message);
+    res.status(500).send({ success: false, error: error.message });
+  }
+};
+export const getChangePassword = async (req, res) => {
+  try {
+    console.log("Change Password Page:", req.body);
+    console.log("token:", req.params.token);
+    const token = jwt.verify(req.body.token, process.env.JWT_SECRET);
+    console.log("token:", token);
+
+    const SALT_ROUND = 10;
+
+    const hash = await bcrypt.hash(req.body.password, SALT_ROUND);
+    console.log("hash:", hash);
+    req.body.password = hash;
+
+    const user = await User.findByIdAndUpdate(
+      token.id,
+      { password: req.body.password },
+      { new: true }
+    );
+    console.log("User:", user);
+
+    res.send({ success: true });
+  } catch (error) {
+    console.log("Error in Change Password Page:", error.message);
     res.status(500).send({ success: false, error: error.message });
   }
 };
