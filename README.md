@@ -18,4 +18,5 @@ This project has been presented by Collaborators:
 -- Technologies used --
 1. React - Vite
 2. MERN Stack
+
 :green_heart:
