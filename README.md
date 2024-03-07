@@ -2,9 +2,9 @@
 **A small personal customizable Herbarium (specimen collection)**
 
 This project has been presented by Collaborators:
--:green_heart: [Tyhe Ferenc](https://github.com/MEINNASTIE)
--:green_heart: [Issa Georges](https://github.com/issageorges)
--:green_heart: [Jamilya Halyyeva](https://github.com/JamilyaHalyyeva))
+- [Tyhe Ferenc](https://github.com/MEINNASTIE)
+- [Issa Georges](https://github.com/issageorges)
+- [Jamilya Halyyeva](https://github.com/JamilyaHalyyeva))
 
 -- About the project --
 - Our project aimed to create an online Herbarium, providing a digital repository for preserving and sharing botanical specimens. Traditional herbarium collections are invaluable resources for scientific research, education, and conservation efforts. However, accessing physical specimens can be challenging due to factors such as location, availability, and preservation concerns. By digitizing these collections and making them available online, we aimed to overcome these limitations and promote broader access to botanical knowledge. 
@@ -18,3 +18,4 @@ This project has been presented by Collaborators:
 -- Technologies used --
 1. React - Vite
 2. MERN Stack
+:green_heart:
